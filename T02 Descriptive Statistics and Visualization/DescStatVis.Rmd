@@ -1,0 +1,242 @@
+---
+title: "T02 Descriptive Statistics and Visualization"
+subtitle: "MATH	2411 Applied Statistics"
+author: "WANG Zhiwei"
+institute: "MATH, HKUST"
+date: "2024-09-16"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  results = "asis",
+  echo = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+library(xaringanthemer)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+style_mono_accent(
+  header_font_google = google_font("Josefin Slab", "600"),
+  text_font_google   = google_font("Work Sans", "300", "300i"),
+  code_font_google   = google_font("IBM Plex Mono")
+)
+
+style_mono_light(
+  base_color = "#003366",
+  link_color = "#996600",
+  text_bold_color = "#996600",
+  link_decoration = "underline"
+)
+```
+
+```{r xaringan-panelset, echo=FALSE}
+xaringanExtra::use_panelset()
+```
+
+class: inverse, center, middle
+
+# Let's first simulate a dataset!
+
+---
+
+## Student grading system
+
+```{r}
+set.seed(20240916)
+n_students <- 50; n_groups <- 5
+each_group <- n_students / n_groups
+id <- as.factor(c(1:n_students))
+gender <- sample(c("M", "F"), n_students, replace = TRUE)
+group <- as.factor(rep(1:n_groups, each_group))
+math <- round(runif(min = 55, max = 100, n = n_students))
+english <- round(runif(min = 55, max = 100, n = n_students))
+physics <- round(runif(min = 55, max = 100, n = n_students))
+grading_system <- data.frame(id, group, gender, math, english, physics)
+grading_system$average <- rowMeans(grading_system[, c("math", "english", "physics")])
+knitr::kable(head(grading_system, n = 3), format = 'html')
+```
+
+---
+
+## Some simple descriptive statistics
+
+```{r}
+table(grading_system$gender)
+```
+
+--
+
+```{r}
+knitr::kable(summary(grading_system[, c("math", "english", "physics")]), format = 'html')
+```
+
+---
+
+## Some simple descriptive statistics
+
+```{r}
+knitr::kable(var(grading_system[, c("math", "english", "physics")]), format = "html")
+knitr::kable(cor(grading_system[, c("math", "english", "physics")]), format = "html")
+```
+
+---
+class: inverse, center, middle
+
+# How about the visualization?
+
+---
+
+## Histogram
+
+```{r fig.align='center',out.width="50%"}
+hist(grading_system[, "average"])
+```
+
+---
+
+## Boxplot
+
+```{r fig.align='center',out.width="50%"}
+boxplot(grading_system[, "average"])
+```
+
+---
+
+## Boxplot
+
+```{r fig.align='center',out.width="50%"}
+boxplot(grading_system[, c("math", "english", "physics", "average")])
+```
+
+---
+
+## Scatterplot
+
+```{r fig.align='center',out.width="50%"}
+plot(x = grading_system[, "math"], y = grading_system[, "average"])
+```
+
+---
+
+## Scatterplot
+
+```{r fig.align='center',out.width="50%"}
+plot(grading_system[, c("gender", "math", "english", "physics", "average")])
+```
+
+---
+
+## Scatterplot
+
+```{r fig.align='center',out.width="40%"}
+fit_lm <- lm(average ~ math, data = grading_system)
+plot(average ~ math, data = grading_system)
+abline(fit_lm, col = "red")
+fit_lm$coefficients
+```
+
+---
+class: inverse, center, middle
+
+# Want more beautiful figures?
+
+--
+
+# Use ggplot2!
+
+--
+
+**Someone said that if you don’t know ggplot2, it’s like you haven’t learned R:)**
+
+---
+
+## Histogram
+
+.panelset[
+
+```{r panelset = c(source = "Code", output = "Figure"), fig.align = "center", out.width = "50%"}
+# install.packages("ggplot2")
+library(ggplot2)
+ggplot(grading_system, aes(x = average)) +
+  geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
+  labs(title = "Histogram of average score", x = "Average score", y = "Frequency") +
+  theme_classic() +
+  theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 12),
+        axis.text.x = element_text(size = 16),
+        axis.text.y = element_text(size = 16))
+```
+
+]
+
+---
+
+## Histogram
+
+.panelset[
+
+.panel[.panel-name[`group` argument]
+
+We can also generate the histogram in group.
+
+]
+
+```{r panelset = c(source = "Code", output = "Figure"), fig.align = "center", out.width = "50%"}
+ggplot(grading_system, aes(x = average, group = group)) +
+  geom_histogram(aes(fill = group, color = group)) +
+  labs(title = "Histogram of average score", x = "Average score", y = "Frequency") +
+  theme_classic() +
+  theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 12),
+        axis.text.x = element_text(size = 16),
+        axis.text.y = element_text(size = 16))
+```
+
+]
+
+---
+
+## Boxplot
+
+.panelset[
+
+```{r panelset = c(source = "Code", output = "Figure"), fig.align = "center", out.width = "50%"}
+library(ggplot2)
+ggplot(grading_system, aes(x = group, y = average)) +
+  geom_boxplot(aes(fill = group, color = group)) +
+  labs(title = "Boxplot of average score", x = "Group", y = "Average score") +
+  theme_classic() +
+  theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 12),
+        axis.text.x = element_text(size = 16),
+        axis.text.y = element_text(size = 16))
+```
+
+]
+
+---
+class: inverse, center, middle
+
+# Thank you!
+
+Slides created via Yihui Xie's R package [**xaringan**](https://github.com/yihui/xaringan).
+
+Theme customized via Garrick Aden-Buie's R package [**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer).
+
+Tabbed panels created via Garrick Aden-Buie's R package [**xaringanExtra**](https://github.com/gadenbuie/xaringanExtra/).
+
+The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](https://yihui.org/knitr/), and [R Markdown](https://rmarkdown.rstudio.com).
