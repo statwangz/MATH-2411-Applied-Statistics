@@ -446,7 +446,7 @@ hist(grading_system[, "average"])
 
 ---
 
-## Boxplot
+## Box plot
 
 
 ``` r
@@ -457,7 +457,7 @@ boxplot(grading_system[, "average"])
 
 ---
 
-## Boxplot
+## Box plot
 
 
 ``` r
@@ -658,7 +658,7 @@ ggplot(grading_system_long, aes(x = score)) +
 
 ---
 
-## Boxplot
+## Box plot
 
 .panelset[
 
@@ -668,7 +668,7 @@ ggplot(grading_system_long, aes(x = score)) +
 ggplot(grading_system, aes(y = average)) +
   geom_boxplot(color = "black", fill = "pink") +
   geom_hline(aes(yintercept = mean(average)), color = "red", linetype = "dashed", linewidth = 2) +
-  labs(title = "Boxplot of average score", y = "Frequence") +
+  labs(title = "Box plot of average score", y = "Frequence") +
   theme_bw() +
   theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
         axis.title = element_text(face = "bold", size = 20),
@@ -691,7 +691,7 @@ ggplot(grading_system, aes(y = average)) +
 
 ---
 
-## Boxplot in group
+## Box plot in group
 
 .panelset[
 
@@ -699,8 +699,8 @@ ggplot(grading_system, aes(y = average)) +
 
 ``` r
 ggplot(grading_system, aes(x = group, y = average)) +
-  geom_boxplot(aes(fill = group, color = group)) +
-  labs(title = "Boxplot of average score", x = "Group", y = "Average score") +
+  geom_boxplot(aes(color = group)) +
+  labs(title = "Box plot of average score", x = "Group", y = "Average score") +
   theme_bw() +
   theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
         axis.title = element_text(face = "bold", size = 20),
@@ -725,7 +725,7 @@ ggplot(grading_system, aes(x = group, y = average)) +
 
 ---
 
-## Boxplots with `facet_grid()`
+## Box plots with `facet_grid()`
 
 .panelset[
 
@@ -733,8 +733,8 @@ ggplot(grading_system, aes(x = group, y = average)) +
 
 ``` r
 ggplot(grading_system_long, aes(x = group, y = score)) +
-  geom_boxplot(aes(fill = group, color = group)) +
-  labs(title = "Boxplots of scores", x = "Group", y = "Frequence") +
+  geom_boxplot(aes(color = group)) +
+  labs(title = "Box plots of scores", x = "Group", y = "Frequence") +
   facet_grid(subject ~ .) +
   theme_bw() +
   theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
@@ -797,7 +797,7 @@ ggplot(grading_system_long, aes(x = group, y = score)) +
 
 ---
 
-## Violin plot with boxplot inner
+## Violin plot with box plot inner
 
 .panelset[
 
