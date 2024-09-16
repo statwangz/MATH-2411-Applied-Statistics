@@ -12,7 +12,7 @@
 
 ## Course Information
 
-[MATH 2411 Applied Statistics](https://canvas.ust.hk/courses/59569)
+[HKUST Canvas link](https://canvas.ust.hk/courses/59569)
  
 Instructor: Dr. Jing Yao (<majyao@ust.hk>)
 
