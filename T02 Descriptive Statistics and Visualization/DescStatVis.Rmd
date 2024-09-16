@@ -54,7 +54,7 @@ class: inverse, center, middle
 
 ```{r}
 set.seed(20240916)
-n_students <- 50; n_groups <- 5
+n_students <- 100; n_groups <- 5
 each_group <- n_students / n_groups
 id <- as.integer(c(1:n_students))
 gender <- as.factor(sample(c("M", "F"), n_students, replace = TRUE))
@@ -72,13 +72,99 @@ knitr::kable(head(grading_system, n = 3), format = 'html')
 ## Some simple descriptive statistics
 
 ```{r}
-table(grading_system$gender)
+dim(grading_system)
 ```
 
 --
 
 ```{r}
-knitr::kable(summary(grading_system[, c("math", "english", "physics")]), format = 'html')
+nrow(grading_system)
+n_students
+```
+
+--
+
+```{r}
+ncol(grading_system)
+```
+
+---
+
+## Some simple descriptive statistics
+
+```{r}
+table(grading_system$gender)
+table(grading_system$group)
+```
+
+--
+
+```{r}
+summary(grading_system$gender)
+summary(grading_system$math)
+```
+
+---
+
+## Some simple descriptive statistics
+
+```{r}
+knitr::kable(summary(grading_system[, c("math", "english", "physics", "average")]), format = 'html')
+```
+
+---
+
+## Some simple descriptive statistics
+
+```{r}
+head(rowMeans(grading_system[, c("math", "english", "physics")]))
+```
+
+--
+
+```{r}
+colMeans(grading_system[, c("math", "english", "physics")])
+colSums(grading_system[, c("math", "english", "physics")]) / nrow(grading_system)
+```
+
+--
+
+**Missing value?**
+
+--
+
+Set `na.rm = TRUE`.
+
+---
+
+## Some simple descriptive statistics
+
+```{r}
+var(grading_system[, "math"])
+```
+
+--
+
+```{r}
+mean((grading_system[, "math"] - mean(grading_system[, "math"]))^2)
+```
+
+--
+
+```{r}
+sum((grading_system[, "math"] - mean(grading_system[, "math"]))^2) / (nrow(grading_system) - 1)
+```
+
+--
+
+```{r}
+sd(grading_system[, "math"])
+```
+
+--
+
+```{r}
+sqrt(var(grading_system[, "math"]))
 ```
 
 ---
@@ -87,8 +173,25 @@ knitr::kable(summary(grading_system[, c("math", "english", "physics")]), format 
 
 ```{r}
 knitr::kable(var(grading_system[, c("math", "english", "physics")]), format = "html")
+```
+
+--
+
+```{r}
+sum((grading_system[, "math"] - mean(grading_system[, "math"])) *
+  (grading_system[, "physics"] - mean(grading_system[, "physics"]))) /
+  (nrow(grading_system) - 1)
+```
+
+---
+
+## Some simple descriptive statistics
+
+```{r}
 knitr::kable(cor(grading_system[, c("math", "english", "physics")]), format = "html")
 ```
+
+**In-class exercise: How to calculate the correlation between `math` and `physics` by yourself?**
 
 ---
 class: inverse, center, middle
@@ -121,7 +224,7 @@ boxplot(grading_system[, c("math", "english", "physics", "average")])
 
 ---
 
-## Scatterplot
+## Scatter plot
 
 ```{r fig.align="center",out.width="50%"}
 plot(x = grading_system[, "math"], y = grading_system[, "average"])
@@ -129,7 +232,7 @@ plot(x = grading_system[, "math"], y = grading_system[, "average"])
 
 ---
 
-## Scatterplot
+## Scatter plot
 
 ```{r fig.align="center",out.width="50%"}
 plot(grading_system[, c("gender", "math", "english", "physics", "average")])
@@ -137,7 +240,7 @@ plot(grading_system[, c("gender", "math", "english", "physics", "average")])
 
 ---
 
-## Scatterplot
+## Scatter plot
 
 ```{r fig.align="center",out.width="35%"}
 fit_lm <- lm(average ~ math, data = grading_system)
@@ -396,7 +499,7 @@ ggplot(grading_system[grading_system$group %in% c(1, 2), ], aes(x = math, y = ph
 
 ---
 
-## Generate a more reasonable dataset 
+## Simulate a more reasonable dataset 
 
 .panelset[
 
@@ -404,7 +507,7 @@ ggplot(grading_system[grading_system$group %in% c(1, 2), ], aes(x = math, y = ph
 
 ```{r}
 mean_vec <- c(70, 70)
-cov_mat <- matrix(c(25, 20, 20, 25), nrow = 2)
+cov_mat <- matrix(c(25, 15, 15, 25), nrow = 2)
 math_physics <- MASS::mvrnorm(n = n_students, 
                               mu = mean_vec, Sigma = cov_mat)
 math_physics <- round(math_physics)

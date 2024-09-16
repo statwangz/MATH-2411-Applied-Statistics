@@ -50,7 +50,7 @@ class: inverse, center, middle
 
 ``` r
 set.seed(20240916)
-n_students &lt;- 50; n_groups &lt;- 5
+n_students &lt;- 100; n_groups &lt;- 5
 each_group &lt;- n_students / n_groups
 id &lt;- as.integer(c(1:n_students))
 gender &lt;- as.factor(sample(c("M", "F"), n_students, replace = TRUE))
@@ -80,28 +80,28 @@ knitr::kable(head(grading_system, n = 3), format = 'html')
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 69 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 80 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 76 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 75 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 79.33333 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 86 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 86 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 68 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 73 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 74.66667 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 85 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 59 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 63 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 70.00000 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -114,18 +114,80 @@ knitr::kable(head(grading_system, n = 3), format = 'html')
 
 
 ``` r
-table(grading_system$gender)
+dim(grading_system)
 ```
 
-
- F  M 
-23 27 
+[1] 100   7
 
 --
 
 
 ``` r
-knitr::kable(summary(grading_system[, c("math", "english", "physics")]), format = 'html')
+nrow(grading_system)
+```
+
+[1] 100
+
+``` r
+n_students
+```
+
+[1] 100
+
+--
+
+
+``` r
+ncol(grading_system)
+```
+
+[1] 7
+
+---
+
+## Some simple descriptive statistics
+
+
+``` r
+table(grading_system$gender)
+```
+
+
+ F  M 
+49 51 
+
+``` r
+table(grading_system$group)
+```
+
+
+ 1  2  3  4  5 
+20 20 20 20 20 
+
+--
+
+
+``` r
+summary(grading_system$gender)
+```
+
+ F  M 
+49 51 
+
+``` r
+summary(grading_system$math)
+```
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  57.00   64.75   77.00   75.89   86.00   94.00 
+
+---
+
+## Some simple descriptive statistics
+
+
+``` r
+knitr::kable(summary(grading_system[, c("math", "english", "physics", "average")]), format = 'html')
 ```
 
 &lt;table&gt;
@@ -135,49 +197,139 @@ knitr::kable(summary(grading_system[, c("math", "english", "physics")]), format 
    &lt;th style="text-align:left;"&gt;      math &lt;/th&gt;
    &lt;th style="text-align:left;"&gt;    english &lt;/th&gt;
    &lt;th style="text-align:left;"&gt;    physics &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;    average &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Min.   :56.00 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Min.   :58.0 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Min.   :57.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Min.   :56.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Min.   :55.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Min.   :62.33 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 1st Qu.:63.25 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 1st Qu.:68.5 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 1st Qu.:62.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1st Qu.:64.75 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1st Qu.:65.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1st Qu.:63.75 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1st Qu.:70.67 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Median :71.00 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Median :77.0 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Median :76.50 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Median :77.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Median :76.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Median :76.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Median :74.83 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Mean   :74.22 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Mean   :76.6 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Mean   :75.18 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean   :75.89 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean   :75.79 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean   :75.05 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean   :75.58 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3rd Qu.:86.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3rd Qu.:86.00 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 3rd Qu.:85.00 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 3rd Qu.:86.0 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 3rd Qu.:86.75 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3rd Qu.:79.75 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Max.   :95.00 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Max.   :94.0 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Max.   :94.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Max.   :95.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Max.   :95.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Max.   :88.33 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 
 
+
+---
+
+## Some simple descriptive statistics
+
+
+``` r
+head(rowMeans(grading_system[, c("math", "english", "physics")]))
+```
+
+[1] 79.33333 74.66667 70.00000 83.66667 78.66667 64.66667
+
+--
+
+
+``` r
+colMeans(grading_system[, c("math", "english", "physics")])
+```
+
+   math english physics 
+  75.89   75.79   75.05 
+
+``` r
+colSums(grading_system[, c("math", "english", "physics")]) / nrow(grading_system)
+```
+
+   math english physics 
+  75.89   75.79   75.05 
+
+--
+
+**Missing value?**
+
+--
+
+Set `na.rm = TRUE`.
+
+---
+
+## Some simple descriptive statistics
+
+
+``` r
+var(grading_system[, "math"])
+```
+
+[1] 132.5029
+
+--
+
+
+``` r
+mean((grading_system[, "math"] - mean(grading_system[, "math"]))^2)
+```
+
+[1] 131.1779
+
+--
+
+
+``` r
+sum((grading_system[, "math"] - mean(grading_system[, "math"]))^2) / (nrow(grading_system) - 1)
+```
+
+[1] 132.5029
+
+--
+
+
+``` r
+sd(grading_system[, "math"])
+```
+
+[1] 11.51099
+
+--
+
+
+``` r
+sqrt(var(grading_system[, "math"]))
+```
+
+[1] 11.51099
 
 ---
 
@@ -200,25 +352,41 @@ knitr::kable(var(grading_system[, c("math", "english", "physics")]), format = "h
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; math &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 162.17510 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -15.930612 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -15.836327 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 132.502929 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.128182 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -7.620707 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; english &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -15.93061 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 115.265306 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8.277551 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.128182 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 146.329192 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -24.928788 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; physics &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -15.83633 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8.277551 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 151.415918 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -7.620707 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -24.928788 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 147.805556 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 
+
+
+--
+
+
+``` r
+sum((grading_system[, "math"] - mean(grading_system[, "math"])) *
+  (grading_system[, "physics"] - mean(grading_system[, "physics"]))) /
+  (nrow(grading_system) - 1)
+```
+
+[1] -7.620707
+
+---
+
+## Some simple descriptive statistics
 
 
 ``` r
@@ -238,25 +406,27 @@ knitr::kable(cor(grading_system[, c("math", "english", "physics")]), format = "h
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; math &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 1.0000000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1165175 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1010594 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0368286 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0544549 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; english &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1165175 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0368286 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 1.0000000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0626566 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.1695080 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; physics &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1010594 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0626566 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0544549 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.1695080 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 1.0000000 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 
 
+
+**In-class exercise: How to calculate the correlation between `math` and `physics` by yourself?**
 
 ---
 class: inverse, center, middle
@@ -272,7 +442,7 @@ class: inverse, center, middle
 hist(grading_system[, "average"])
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-37-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-18-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -283,7 +453,7 @@ hist(grading_system[, "average"])
 boxplot(grading_system[, "average"])
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-38-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-19-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -294,33 +464,33 @@ boxplot(grading_system[, "average"])
 boxplot(grading_system[, c("math", "english", "physics", "average")])
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-39-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-20-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## Scatterplot
+## Scatter plot
 
 
 ``` r
 plot(x = grading_system[, "math"], y = grading_system[, "average"])
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-40-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-21-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## Scatterplot
+## Scatter plot
 
 
 ``` r
 plot(grading_system[, c("gender", "math", "english", "physics", "average")])
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-41-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-22-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## Scatterplot
+## Scatter plot
 
 
 ``` r
@@ -329,14 +499,14 @@ plot(average ~ math, data = grading_system)
 abline(fit_lm, col = "red")
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-42-1.png" width="35%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-23-1.png" width="35%" style="display: block; margin: auto;" /&gt;
 
 ``` r
 fit_lm$coefficients
 ```
 
 (Intercept)        math 
- 55.4394167   0.2680398 
+  50.755858    0.327063 
 
 ---
 class: inverse, center, middle
@@ -384,7 +554,7 @@ ggplot(grading_system, aes(x = average)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-43-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-24-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -428,7 +598,7 @@ ggplot(grading_system, aes(x = average, group = group)) +
 #&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-44-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-25-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -480,7 +650,7 @@ ggplot(grading_system_long, aes(x = score)) +
 #&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-45-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-26-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -513,7 +683,7 @@ ggplot(grading_system, aes(y = average)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-46-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-27-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -547,7 +717,7 @@ ggplot(grading_system, aes(x = group, y = average)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-47-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-28-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -583,7 +753,7 @@ ggplot(grading_system_long, aes(x = group, y = score)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-48-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-29-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -619,7 +789,7 @@ ggplot(grading_system_long, aes(x = group, y = score)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-49-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-30-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -657,7 +827,7 @@ ggplot(grading_system_long, aes(x = group, y = score)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-50-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-31-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -700,7 +870,7 @@ ggplot(grading_system[grading_system$group %in% c(1, 2), ], aes(x = math, y = ph
 #&gt; `geom_smooth()` using formula = 'y ~ x'
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-51-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-32-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -708,7 +878,7 @@ ggplot(grading_system[grading_system$group %in% c(1, 2), ], aes(x = math, y = ph
 
 ---
 
-## Generate a more reasonable dataset 
+## Simulate a more reasonable dataset 
 
 .panelset[
 
@@ -717,7 +887,7 @@ ggplot(grading_system[grading_system$group %in% c(1, 2), ], aes(x = math, y = ph
 
 ``` r
 mean_vec &lt;- c(70, 70)
-cov_mat &lt;- matrix(c(25, 20, 20, 25), nrow = 2)
+cov_mat &lt;- matrix(c(25, 15, 15, 25), nrow = 2)
 math_physics &lt;- MASS::mvrnorm(n = n_students, 
                               mu = mean_vec, Sigma = cov_mat)
 math_physics &lt;- round(math_physics)
@@ -758,7 +928,7 @@ ggplot(grading_system[grading_system$group %in% c(1, 2), ], aes(x = math, y = ph
 #&gt; `geom_smooth()` using formula = 'y ~ x'
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-53-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-34-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
