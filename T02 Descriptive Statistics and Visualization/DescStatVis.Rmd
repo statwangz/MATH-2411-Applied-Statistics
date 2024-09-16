@@ -56,12 +56,12 @@ class: inverse, center, middle
 set.seed(20240916)
 n_students <- 50; n_groups <- 5
 each_group <- n_students / n_groups
-id <- as.factor(c(1:n_students))
-gender <- sample(c("M", "F"), n_students, replace = TRUE)
+id <- as.integer(c(1:n_students))
+gender <- as.factor(sample(c("M", "F"), n_students, replace = TRUE))
 group <- as.factor(rep(1:n_groups, each_group))
-math <- round(runif(min = 55, max = 100, n = n_students))
-english <- round(runif(min = 55, max = 100, n = n_students))
-physics <- round(runif(min = 55, max = 100, n = n_students))
+math <- round(runif(min = 55, max = 95, n = n_students))
+english <- round(runif(min = 55, max = 95, n = n_students))
+physics <- round(runif(min = 55, max = 95, n = n_students))
 grading_system <- data.frame(id, group, gender, math, english, physics)
 grading_system$average <- rowMeans(grading_system[, c("math", "english", "physics")])
 knitr::kable(head(grading_system, n = 3), format = 'html')
@@ -99,7 +99,7 @@ class: inverse, center, middle
 
 ## Histogram
 
-```{r fig.align='center',out.width="50%"}
+```{r fig.align="center",out.width="50%"}
 hist(grading_system[, "average"])
 ```
 
@@ -107,7 +107,7 @@ hist(grading_system[, "average"])
 
 ## Boxplot
 
-```{r fig.align='center',out.width="50%"}
+```{r fig.align="center",out.width="50%"}
 boxplot(grading_system[, "average"])
 ```
 
@@ -123,7 +123,7 @@ boxplot(grading_system[, c("math", "english", "physics", "average")])
 
 ## Scatterplot
 
-```{r fig.align='center',out.width="50%"}
+```{r fig.align="center",out.width="50%"}
 plot(x = grading_system[, "math"], y = grading_system[, "average"])
 ```
 
@@ -131,7 +131,7 @@ plot(x = grading_system[, "math"], y = grading_system[, "average"])
 
 ## Scatterplot
 
-```{r fig.align='center',out.width="50%"}
+```{r fig.align="center",out.width="50%"}
 plot(grading_system[, c("gender", "math", "english", "physics", "average")])
 ```
 
@@ -139,7 +139,7 @@ plot(grading_system[, c("gender", "math", "english", "physics", "average")])
 
 ## Scatterplot
 
-```{r fig.align='center',out.width="40%"}
+```{r fig.align="center",out.width="35%"}
 fit_lm <- lm(average ~ math, data = grading_system)
 plot(average ~ math, data = grading_system)
 abline(fit_lm, col = "red")
@@ -157,7 +157,11 @@ class: inverse, center, middle
 
 --
 
-**Someone said that if you don’t know ggplot2, it’s like you haven’t learned R:)**
+Someone said that if you don’t know ggplot2, it’s like you haven’t learned R!
+
+--
+
+**Actually, "someone" is me:)**
 
 ---
 
@@ -165,13 +169,14 @@ class: inverse, center, middle
 
 .panelset[
 
-```{r panelset = c(source = "Code", output = "Figure"), fig.align = "center", out.width = "50%"}
+```{r panelset=c(source="Code",output="Figure"),fig.align="center",out.width="50%"}
 # install.packages("ggplot2")
 library(ggplot2)
 ggplot(grading_system, aes(x = average)) +
   geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
+  geom_vline(aes(xintercept = mean(average)), color = "red", linetype = "dashed", linewidth = 3) +
   labs(title = "Histogram of average score", x = "Average score", y = "Frequency") +
-  theme_classic() +
+  theme_bw() +
   theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 12),
@@ -183,7 +188,7 @@ ggplot(grading_system, aes(x = average)) +
 
 ---
 
-## Histogram
+## Histogram in group
 
 .panelset[
 
@@ -193,16 +198,54 @@ We can also generate the histogram in group.
 
 ]
 
-```{r panelset = c(source = "Code", output = "Figure"), fig.align = "center", out.width = "50%"}
+```{r panelset=c(source="Code",output="Figure"),fig.align="center",out.width="50%"}
 ggplot(grading_system, aes(x = average, group = group)) +
   geom_histogram(aes(fill = group, color = group)) +
   labs(title = "Histogram of average score", x = "Average score", y = "Frequency") +
-  theme_classic() +
+  theme_bw() +
   theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 12),
         axis.text.x = element_text(size = 16),
-        axis.text.y = element_text(size = 16))
+        axis.text.y = element_text(size = 16),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 16))
+```
+
+]
+
+---
+
+## Histogram with `facet_grid()`
+
+.panelset[
+
+.panel[.panel-name[`facet_grid()`]
+
+`facet_grid()` forms a matrix of panels defined by row and column faceting variables. It is most useful when you have two discrete variables, and all combinations of the variables exist in the data. 
+
+Let's see the following example to generate the histograms of all three subjects in each group.
+
+]
+
+```{r panelset=c(source="Code",output="Figure"),fig.align="center",out.width="50%"}
+grading_system_long <- reshape2::melt(grading_system[, -7], 
+                                      id = c("id", "group", "gender"), 
+                                      variable.name = "subject", 
+                                      value.name = "score")
+ggplot(grading_system_long, aes(x = score)) +
+  geom_histogram(aes(fill = subject, color = subject)) +
+  labs(title = "Histogram of all subjects", x = "Score", y = "Frequency") +
+  facet_grid(group ~ subject) +
+  theme_bw() +
+  theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 16),
+        axis.text.x = element_text(size = 12, angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 16),
+        strip.text = element_text(size = 16, color = "#490573"))
 ```
 
 ]
@@ -213,17 +256,181 @@ ggplot(grading_system, aes(x = average, group = group)) +
 
 .panelset[
 
-```{r panelset = c(source = "Code", output = "Figure"), fig.align = "center", out.width = "50%"}
-library(ggplot2)
+```{r panelset=c(source="Code",output="Figure"),fig.align="center",out.width="50%"}
+ggplot(grading_system, aes(y = average)) +
+  geom_boxplot(color = "black", fill = "pink") +
+  geom_hline(aes(yintercept = mean(average)), color = "red", linetype = "dashed", linewidth = 2) +
+  labs(title = "Boxplot of average score", y = "Frequence") +
+  theme_bw() +
+  theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 12),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 16))
+```
+
+]
+
+---
+
+## Boxplot in group
+
+.panelset[
+
+```{r panelset=c(source="Code",output="Figure"),fig.align="center",out.width="50%"}
 ggplot(grading_system, aes(x = group, y = average)) +
   geom_boxplot(aes(fill = group, color = group)) +
   labs(title = "Boxplot of average score", x = "Group", y = "Average score") +
-  theme_classic() +
+  theme_bw() +
   theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 12),
         axis.text.x = element_text(size = 16),
-        axis.text.y = element_text(size = 16))
+        axis.text.y = element_text(size = 16),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 16))
+```
+
+]
+
+---
+
+## Boxplots with `facet_grid()`
+
+.panelset[
+
+```{r panelset=c(source="Code",output="Figure"),fig.align="center",out.width="50%"}
+ggplot(grading_system_long, aes(x = group, y = score)) +
+  geom_boxplot(aes(fill = group, color = group)) +
+  labs(title = "Boxplots of scores", x = "Group", y = "Frequence") +
+  facet_grid(subject ~ .) +
+  theme_bw() +
+  theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 16),
+        axis.text.x = element_text(size = 16),
+        axis.text.y = element_text(size = 16),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 16),
+        strip.text = element_text(size = 16))
+```
+
+]
+
+---
+
+## Violin plot
+
+.panelset[
+
+```{r panelset=c(source="Code",output="Figure"),fig.align="center",out.width="50%"}
+ggplot(grading_system_long, aes(x = group, y = score)) +
+  geom_violin(aes(fill = group, color = group)) +
+  labs(title = "Violin plots of scores", x = "Group", y = "Frequence") +
+  facet_grid(subject ~ .) +
+  theme_bw() +
+  theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 16),
+        axis.text.x = element_text(size = 16),
+        axis.text.y = element_text(size = 16),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 16),
+        strip.text = element_text(size = 16))
+```
+
+]
+
+---
+
+## Violin plot with boxplot inner
+
+.panelset[
+
+```{r panelset=c(source="Code",output="Figure"),fig.align="center",out.width="50%",warning=FALSE}
+ggplot(grading_system_long, aes(x = group, y = score)) +
+  geom_violin(aes(fill = group), trim = FALSE) +
+  geom_boxplot(width = 0.1, fill = "white", color = "black") +
+  ylim(50, 100) +
+  labs(title = "Violin plots of scores", x = "Group", y = "Frequence") +
+  facet_grid(subject ~ .) +
+  theme_bw() +
+  theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 16),
+        axis.text.x = element_text(size = 16),
+        axis.text.y = element_text(size = 16),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 16),
+        strip.text = element_text(size = 16))
+```
+
+]   
+
+---
+
+## Scatter plot
+
+.panelset[
+
+```{r panelset=c(source="Code",output="Figure"),fig.align="center",out.width="50%"}
+# Use only first two groups
+ggplot(grading_system[grading_system$group %in% c(1, 2), ], aes(x = math, y = physics)) +
+  facet_grid(. ~ group) +
+  geom_point(aes(color = group), size = 3) +
+  geom_smooth(method = "lm") +
+  labs(title = "Scatter plot of math and physics", x = "Math", y = "Physics") +
+  coord_fixed(ratio = 1) +
+  theme_bw() +
+  theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 16),
+        axis.text.x = element_text(size = 16),
+        axis.text.y = element_text(size = 16),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 16),
+        strip.text = element_text(size = 16))
+```
+
+]
+
+---
+
+## Generate a more reasonable dataset 
+
+.panelset[
+
+.panel[.panel-name[Multivariate normal distribution]
+
+```{r}
+mean_vec <- c(70, 70)
+cov_mat <- matrix(c(25, 20, 20, 25), nrow = 2)
+math_physics <- MASS::mvrnorm(n = n_students, 
+                              mu = mean_vec, Sigma = cov_mat)
+math_physics <- round(math_physics)
+math_physics[math_physics < 55] <- 55
+math_physics[math_physics > 95] <- 95
+grading_system[, c("math", "physics")] <- math_physics
+```
+
+]
+
+```{r panelset=c(source="Code",output="Figure"),fig.align="center",out.width="50%",warning=FALSE}
+ggplot(grading_system[grading_system$group %in% c(1, 2), ], aes(x = math, y = physics)) +
+  facet_grid(. ~ group) +
+  geom_point(aes(color = group), size = 3) +
+  geom_smooth(method = "lm") +
+  labs(title = "Scatter plot of math and physics", x = "Math", y = "Physics") +
+  coord_fixed(ratio = 1) +
+  theme_bw() +
+  theme(plot.title = element_text(face = "bold", size = 24, hjust = 0.5),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 16),
+        axis.text.x = element_text(size = 16),
+        axis.text.y = element_text(size = 16),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 16),
+        strip.text = element_text(size = 16))
 ```
 
 ]
