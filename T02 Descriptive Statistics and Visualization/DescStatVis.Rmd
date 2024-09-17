@@ -1,5 +1,5 @@
 ---
-title: "T02 Descriptive Statistics and Visualization"
+title: "T02: Descriptive Statistics and Visualization"
 subtitle: "MATH	2411 Applied Statistics"
 author: "WANG Zhiwei"
 institute: "MATH, HKUST"
