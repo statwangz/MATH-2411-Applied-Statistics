@@ -20,14 +20,13 @@ Teaching Assistant: Zhiwei Wang (<zhiwei.wang@connect.ust.hk>)
 
 ## Tutorial Files
 
+The source files of the slides are in `.Rmd` format.
+You can have a look at them if you are interested in how to create slides through R Markdown.
 
-The source files of the slides are `.Rmd` files.
-If you are interested in how to create slides through R Markdown, you can have a look at them.
-
-To get a full view of the slides, I recommend you open the `.html` files (e.g., [`Introduction.html`](https://github.com/statwangz/MATH-2411-Applied-Statistics/blob/main/T01%20A%20Brief%20Introduction%20to%20R/Introduction.html)) with your browser after downloading the entire repository.
+To get a full view of the slides, I recommend opening the `.html` files (e.g., [`Introduction.html`](https://github.com/statwangz/MATH-2411-Applied-Statistics/blob/main/T01%20A%20Brief%20Introduction%20to%20R/Introduction.html)) with your browser after downloading the entire tutorial folder.
 Typically this works best in Chrome.
 
-I also provide the PDF version via John Paul Helveston and Garrick Aden-Buie's R package [**renderthis**](https://github.com/jhelvy/renderthis).
+I also provide the PDF version via John Paul Helveston and Garrick Aden-Buie's R package [**renderthis**](https://github.com/jhelvy/renderthis):
 ```r
 renderthis::to_pdf(from = "filename.Rmd", complex_slides = TRUE, partial_slides = FALSE)
 ```
