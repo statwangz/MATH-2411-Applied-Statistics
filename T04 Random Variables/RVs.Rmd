@@ -1,0 +1,158 @@
+---
+title: "T04: Random Variables"
+subtitle: "MATH	2411 Applied Statistics"
+author: "WANG Zhiwei"
+institute: "MATH, HKUST"
+date: "2024-09-30"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  results = "asis",
+  echo = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+library(xaringanthemer)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+style_mono_accent(
+  header_font_google = google_font("Josefin Slab", "600"),
+  text_font_google   = google_font("Work Sans", "300", "300i"),
+  code_font_google   = google_font("IBM Plex Mono")
+)
+
+style_mono_light(
+  base_color = "#003366",
+  link_color = "#996600",
+  text_bold_color = "#996600",
+  link_decoration = "underline"
+)
+```
+
+```{r xaringan-panelset, echo=FALSE}
+xaringanExtra::use_panelset()
+```
+
+class: inverse, center, middle
+
+# Two common types of r.v.'s
+
+---
+
+## Discrete Random Variable
+
+Let $X$ be a discrete random variable:
+
+- $p(x)$, the Probability Mass Function (PMF) of $X$, is the probability that event $X = x$ will occur for each $x$ in the range of $X$, i.e., $p(x) = P(X = x)$.
+
+- $F(x)$, the Cumulative Distribution Function (CDF) of $X$, is defined as $F(x) = P(X \leq x)$.
+
+- $E(X)$, the Expectation of $X$, is defined as
+  $$E(X) = \sum_{x \in \text{Range}(X)} [x \cdot P(x)]$$
+
+- $\text{Var}(X)$, the Variance of $X$, is defined as
+  $$\text{Var}(X) = \sum_{x \in \text{Range}(X)} [(x - E(X))^2 \cdot P(x)] = E((X - E(X))^2)$$
+
+---
+
+## Proporties of population mean and variance
+
+When it exists, the mathematical expectation $E$ satisfies the following properties: Suppose $X, Y$ are random variables and $a$ and $b$ are two constants. Then
+
+- $E(b) = b$
+- $E(aX) = aE(X)$
+- $E(aX + b) = aE(X) + b$
+- $E(X + Y) = E(X) + E(Y)$
+
+--
+
+When it exists, the population variance satisfies the following properties: Suppose $X$ and $Y$ are random variables and $a$ and $b$ are two constants. Then
+
+- $\text{Var}(b) = 0$
+- $\text{Var}(aX) = a^2 \text{Var}(X)$
+- $\text{Var}(aX + b) = a^2 \text{Var}(X)$
+- If $X$ and $Y$ are independent random variables, then $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$.
+
+---
+
+## Problem 1
+
+Let $X$ be a random variable with the following probability distribution:
+
+| $x$ | 2   | 3   | 4   |
+|-----|-----|-----|-----|
+| $p(x)$ | $\frac{4}{15}$ | $\frac{4}{15}$ | $\frac{7}{15}$ |
+
+--
+
+a. Find Expected Value $E(X)$
+
+--
+
+b. Find Variance $\text{Var}(X)$
+
+--
+
+c. Find Standard Deviation $\sigma(Y)$, where $Y = 2X - 1$ (Hint: $\sigma(X) = \sqrt{\text{Var}(X)}$)
+   
+--
+
+d. Find the CDF of $X$ and plot the graph of the CDF.
+
+---
+
+## Problem 2
+
+There are 8 female students and 24 male students in MATH2411 Tutorial. For the next 5 weeks, every week after class one student will be chosen randomly to invite everybody for tea. Let $X$ be the total number of female students chosen.
+
+--
+
+a. Find the probability that the 'paying gender' sequence will be FMMFM.
+
+--
+
+b. Find the probability that the 'paying gender' sequence will be MMF FM.
+
+--
+
+c. In how many ways 2 out of the 5 places can be chosen?
+
+--
+
+d. What is the probability that 2 out of the 5 weeks will be paid by female students?
+
+--
+
+e. What is the probability that no more than 1 week will be paid by female students?
+
+--
+
+f. What is the probability that at least 1 week will be paid by a male student?
+
+--
+
+g. What is the mean of $X$?
+
+---
+class: inverse, center, middle
+
+# Thank you!
+
+Slides created via Yihui Xie's R package [**xaringan**](https://github.com/yihui/xaringan).
+
+Theme customized via Garrick Aden-Buie's R package [**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer).
+
+Tabbed panels created via Garrick Aden-Buie's R package [**xaringanExtra**](https://github.com/gadenbuie/xaringanExtra/).
+
+The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](https://yihui.org/knitr/), and [R Markdown](https://rmarkdown.rstudio.com).
