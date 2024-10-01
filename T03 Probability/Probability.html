@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>T03: Probability</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="WANG Zhiwei" />
+    <meta name="date" content="2024-09-23" />
+    <script src="libs/header-attrs-2.28/header-attrs.js"></script>
+    <link href="libs/panelset-0.3.0/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.3.0/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# T03: Probability
+]
+.subtitle[
+## MATH 2411 Applied Statistics
+]
+.author[
+### WANG Zhiwei
+]
+.institute[
+### MATH, HKUST
+]
+.date[
+### 2024-09-23
+]
+
+---
+
+
+
+
+
+
+
+
+class: inverse, center, middle
+
+# Counting and Operations Principles
+
+---
+
+## Counting and operations principles
+
+1. **Event:**
+   - `\(A\)`
+   - `\(A^c\)` — the Complement of an event `\(A\)`;
+   - `\(\emptyset\)` — the Empty Set;
+   - `\(S\)` — the whole Sample Space
+
+--
+
+2. **Intersection of Events:** `\(A \cap B\)`
+
+3. **Union of Events:** `\(A \cup B\)`
+
+--
+
+4. **Associative Law:**
+   - `\(A \cup (B \cup C) = (A \cup B) \cup C\)`
+   - `\(A \cap (B \cap C) = (A \cap B) \cap C\)`
+
+5. **Distributive Law:**
+   - `\(A \cap (B \cup C) = (A \cap B) \cup (A \cap C)\)`
+   - `\(A \cup (B \cap C) = (A \cup B) \cap (A \cup C)\)`
+   
+---
+
+## Counting and operations principles
+
+6. **De Morgan’s Law:**  `\((A \cup B)^c = A^c \cap B^c\)`, `\((A \cap B)^c = A^c \cup B^c\)`
+
+--
+
+7. For **any events** `\(A\)`, `\(B\)`, and `\(C\)`:
+   
+  `$$\begin{align*}
+    P(A \cup B) = &amp; P(A) + P(B) - P(A \cap B) \\
+    P(A \cup B \cup C) = &amp; P(A) + P(B) + P(C) \\
+      &amp; - P(A \cap B) - P(B \cap C) - P(C \cap A) \\
+      &amp; + P(A \cap B \cap C)
+  \end{align*}$$`
+  
+  We can calculate the probability of `\(P(A_1 \cup A_2 \cup A_3 \cup \cdots \cup A_n)\)` by induction ([inclusion–exclusion principle](https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle)).
+  
+--
+
+8. If events `\(A\)`, `\(B\)`, and `\(C\)` are **mutually exclusive**, then 
+  `$$P(A \cup B \cup C) = P(A) + P(B) + P(C).$$`
+
+   How about the probability of the union of an event family, say, `\(P(A_1 \cup A_2 \cup A_3 \cup \cdots \cup A_n)\)` which has mutually exclusive members?
+   
+---
+
+## Counting and operations principles
+
+9. If `\(A\)` and `\(B\)` are collectively exhaustive, then `\(P(A \cup B) = 1\)`, i.e., one of them must occur.
+
+--
+
+10. **The Factorial Notation:** `\(n! = n \cdot (n - 1) \cdot (n - 2) \cdots 3 \cdot 2 \cdot 1\)`.  
+    While `\(0! = 1\)` by convention.
+
+--
+
+11. Number of permutations of `\(r\)` different objects taken from a given set of size `\(n\)`. Denote by `\(r\)`-permutations of `\(n\)`.
+
+    `$$P(n, r) = \frac{n!}{(n - r)!} = n \cdot (n - 1) \cdot (n - 2) \cdots (n - r + 1)$$`
+
+--
+
+12. Number of combinations of `\(r\)` different objects taken from a given set of size `\(n\)`. Denote by `\(r\)`-combinations of `\(n\)`.
+
+    `$$C(n, r) = \frac{n!}{(n-r)!r!} = \binom{n}{r}$$`
+    
+    **Remark**: [number of ordered samples: `\(P(n, r)\)`] = [number of unordered samples] `\(\times\)` [number of ways to order each sample `\(r!\)`]
+    
+---
+
+## Problem 1
+
+&lt;img src="problem_1.jpg" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+``` r
+set.seed(20240923)
+# Use 0 to denote white and 1 to denote black
+all_balls &lt;- c(rep(0, 6), rep(1, 5)) # 6 white balls and 5 black balls
+n_rep &lt;- 1000 # repeat the experiment 1000 times
+n_success &lt;- 0 # count the number of successes (one of the balls is white and the other two black)
+for (i in 1:n_rep) {
+  sample_balls &lt;- sample(x = all_balls, size = 3) # randomly draw 3 balls
+  # cat("The sample balls are: ", sample_balls, "\n")
+  if(sum(sample_balls) == 2) { # indicates that one of the balls is white and the other two black
+    n_success &lt;- n_success + 1
+  }
+}
+n_success / n_rep
+```
+
+[1] 0.36
+    
+---
+class: inverse, center, middle
+
+# Conditional Probability
+
+---
+
+## Conditional probability
+
+1. Let `\(A\)` and `\(B\)` be two events in a sample space `\(S\)` with `\(P(B) &gt; 0\)`. The **conditional probability** of `\(A\)` given `\(B\)` is defined as:
+
+   `$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$`
+
+--
+
+2. Let `\(A\)` and `\(B\)` be two events in a sample space `\(S\)`. `\(A\)` and `\(B\)` are called **independent** if `\(P(A \cap B) = P(A)P(B)\)`.
+
+--
+
+3. Let `\(B_1, B_2, \ldots, B_n\)` be a partition (both **exhaustive** and **mutually exclusive**) of the sample space `\(S\)` such that `\(P(B_i) \neq 0\)` for all `\(B_i\)`. Then for any event `\(A\)`:
+
+   `$$P(A) = \sum_{i=1}^{n} P(A \cap B_i) = \sum_{i=1}^{n} P(A \mid B_i) P(B_i) \quad \text{(Law of total probability)}$$`
+
+   `$$P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{P(A)} = \frac{P(A \mid B_i) P(B_i)}{\sum_{j=1}^{n} P(A \mid B_j) P(B_j)} \quad \text{(Bayes' Theorem)}$$`
+   
+---
+
+## Problem 2
+
+&lt;img src="problem_2.jpg" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Problem 3
+
+&lt;img src="problem_3.jpg" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Problem 4
+
+&lt;img src="problem_4.jpg" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, center, middle
+
+# Thank you!
+
+Slides created via Yihui Xie's R package [**xaringan**](https://github.com/yihui/xaringan).
+
+Theme customized via Garrick Aden-Buie's R package [**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer).
+
+Tabbed panels created via Garrick Aden-Buie's R package [**xaringanExtra**](https://github.com/gadenbuie/xaringanExtra/).
+
+The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](https://yihui.org/knitr/), and [R Markdown](https://rmarkdown.rstudio.com).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
