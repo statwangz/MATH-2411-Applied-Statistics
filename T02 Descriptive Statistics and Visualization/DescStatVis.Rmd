@@ -194,6 +194,56 @@ knitr::kable(cor(grading_system[, c("math", "english", "physics")]), format = "h
 **In-class exercise: How to calculate the correlation between `math` and `physics` by yourself?**
 
 ---
+
+### Problem 1
+
+Prove that the sample variance
+
+$$s^2_{n-1} = \frac{1}{n-1} \left( \sum_{i=1}^{n} x_i^2 - n \cdot \bar{x}^2 \right)$$
+
+where $\bar{x}$ is the sample mean of $\{x_1, x_2, \cdots, x_n\}$. 
+
+---
+
+### Problem 1
+
+```{r out.width='65%', fig.align='center', echo=FALSE}
+knitr::include_graphics("solution_1.png")
+```
+
+---
+
+### Problem 2
+
+Let $x_1, x_2, \cdots, x_n$ be a sample of data and $y_1, y_2, \cdots, y_n$ be a new sample of data generated from $\{x_i\}_{i=1}^{n}$ so that $y_i = x_i + d$ for all $i = 1, \cdots, n$. What is the relation between the sample variance of $\{x_i\}_{i=1}^{n}$ and the sample variance of $\{y_i\}_{i=1}^{n}$?
+
+--
+
+```{r out.width='75%', fig.align='center', echo=FALSE}
+knitr::include_graphics("solution_2.png")
+```
+
+---
+
+### Problem 3
+
+Let $x_1, x_2, \cdots, x_n$ be a sample of data. We define the "center" of the data as the value $C$ which minimizes the data variation:
+
+$$\min_C \sum_{i=1}^{n} (x_i - C)^2.$$
+
+Can you determine what $C$ is if given $\{x_1, \cdots, x_n\}$?
+
+--
+
+```{r out.width='75%', fig.align='center', echo=FALSE}
+knitr::include_graphics("solution_3.png")
+```
+
+--
+
+**What if we replace the quadratic function with an absolute value function?**
+
+---
 class: inverse, center, middle
 
 # How about the visualization?

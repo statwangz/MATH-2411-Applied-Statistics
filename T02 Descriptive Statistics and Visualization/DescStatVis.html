@@ -429,6 +429,50 @@ knitr::kable(cor(grading_system[, c("math", "english", "physics")]), format = "h
 **In-class exercise: How to calculate the correlation between `math` and `physics` by yourself?**
 
 ---
+
+### Problem 1
+
+Prove that the sample variance
+
+`$$s^2_{n-1} = \frac{1}{n-1} \left( \sum_{i=1}^{n} x_i^2 - n \cdot \bar{x}^2 \right)$$`
+
+where `\(\bar{x}\)` is the sample mean of `\(\{x_1, x_2, \cdots, x_n\}\)`. 
+
+---
+
+### Problem 1
+
+&lt;img src="solution_1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Problem 2
+
+Let `\(x_1, x_2, \cdots, x_n\)` be a sample of data and `\(y_1, y_2, \cdots, y_n\)` be a new sample of data generated from `\(\{x_i\}_{i=1}^{n}\)` so that `\(y_i = x_i + d\)` for all `\(i = 1, \cdots, n\)`. What is the relation between the sample variance of `\(\{x_i\}_{i=1}^{n}\)` and the sample variance of `\(\{y_i\}_{i=1}^{n}\)`?
+
+--
+
+&lt;img src="solution_2.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Problem 3
+
+Let `\(x_1, x_2, \cdots, x_n\)` be a sample of data. We define the "center" of the data as the value `\(C\)` which minimizes the data variation:
+
+`$$\min_C \sum_{i=1}^{n} (x_i - C)^2.$$`
+
+Can you determine what `\(C\)` is if given `\(\{x_1, \cdots, x_n\}\)`?
+
+--
+
+&lt;img src="solution_3.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+--
+
+**What if we replace the quadratic function with an absolute value function?**
+
+---
 class: inverse, center, middle
 
 # How about the visualization?
@@ -442,7 +486,7 @@ class: inverse, center, middle
 hist(grading_system[, "average"])
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-18-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-21-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -453,7 +497,7 @@ hist(grading_system[, "average"])
 boxplot(grading_system[, "average"])
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-19-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-22-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -464,7 +508,7 @@ boxplot(grading_system[, "average"])
 boxplot(grading_system[, c("math", "english", "physics", "average")])
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-20-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-23-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -475,7 +519,7 @@ boxplot(grading_system[, c("math", "english", "physics", "average")])
 plot(x = grading_system[, "math"], y = grading_system[, "average"])
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-21-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-24-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -486,7 +530,7 @@ plot(x = grading_system[, "math"], y = grading_system[, "average"])
 plot(grading_system[, c("gender", "math", "english", "physics", "average")])
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-22-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-25-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -499,7 +543,7 @@ plot(average ~ math, data = grading_system)
 abline(fit_lm, col = "red")
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-23-1.png" width="35%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-26-1.png" width="35%" style="display: block; margin: auto;" /&gt;
 
 ``` r
 fit_lm$coefficients
@@ -554,7 +598,7 @@ ggplot(grading_system, aes(x = average)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-24-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-27-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -598,7 +642,7 @@ ggplot(grading_system, aes(x = average, group = group)) +
 #&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-25-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-28-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -650,7 +694,7 @@ ggplot(grading_system_long, aes(x = score)) +
 #&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-26-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-29-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -683,7 +727,7 @@ ggplot(grading_system, aes(y = average)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-27-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-30-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -717,7 +761,7 @@ ggplot(grading_system, aes(x = group, y = average)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-28-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-31-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -753,7 +797,7 @@ ggplot(grading_system_long, aes(x = group, y = score)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-29-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-32-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -789,7 +833,7 @@ ggplot(grading_system_long, aes(x = group, y = score)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-30-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-33-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -827,7 +871,7 @@ ggplot(grading_system_long, aes(x = group, y = score)) +
 
 .panel[.panel-name[Figure]
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-31-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-34-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -870,7 +914,7 @@ ggplot(grading_system[grading_system$group %in% c(1, 2), ], aes(x = math, y = ph
 #&gt; `geom_smooth()` using formula = 'y ~ x'
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-32-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-35-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -928,7 +972,7 @@ ggplot(grading_system[grading_system$group %in% c(1, 2), ], aes(x = math, y = ph
 #&gt; `geom_smooth()` using formula = 'y ~ x'
 ```
 
-&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-34-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="DescStatVis_files/figure-html/unnamed-chunk-37-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ]
 
