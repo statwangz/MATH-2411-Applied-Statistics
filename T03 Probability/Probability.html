@@ -41,11 +41,11 @@ class: center, middle, inverse, title-slide
 
 class: inverse, center, middle
 
-# Counting and Operations Principles
+# Sample space, events, and probability
 
 ---
 
-## Counting and operations principles
+## Sample space, events, and probability
 
 1. **Event:**
    - `\(A\)`
@@ -71,7 +71,7 @@ class: inverse, center, middle
    
 ---
 
-## Counting and operations principles
+## Sample space, events, and probability
 
 6. **De Morgan’s Law:**  `\((A \cup B)^c = A^c \cap B^c\)`, `\((A \cap B)^c = A^c \cup B^c\)`
 
@@ -94,7 +94,50 @@ class: inverse, center, middle
   `$$P(A \cup B \cup C) = P(A) + P(B) + P(C).$$`
 
    How about the probability of the union of an event family, say, `\(P(A_1 \cup A_2 \cup A_3 \cup \cdots \cup A_n)\)` which has mutually exclusive members?
-   
+
+---
+
+### Problem 1.1
+
+For any events `\(A\)`, `\(B\)`, `\(C\)`, show that
+`$$P((A \cup B) | C) = P(A | C) + P(B | C) - P((A \cap B) | C)$$`
+
+  **Proof** 
+    `$$\begin{align*}
+      P((A \cup B) | C) = &amp;\frac{P((A \cup B) \cap C)}{P(C)}, \\
+      P((A \cup B) \cap C) = &amp;P((A \cap C) \cup (B \cap C))  \\
+      = &amp;P(A \cap C) + P(B \cap C) - P(A \cap B \cap C), \\
+      P((A \cup B) | C) = &amp;\frac{P(A \cap C)}{P(C)} + \frac{P(B \cap C)}{P(C)} - \frac{P(A \cap B \cap C)}{P(C)}  \\
+      = &amp;P(A | C) + P(B | C) - P((A \cap B) | C).
+    \end{align*}$$`
+
+---
+
+### Problem 1.2
+
+For any events `\(A\)`, `\(B\)`, `\(C\)`, show that
+`$$\begin{align*}
+P(A \cup B \cup C) = &amp; P(A) + P(B) + P(C) \\
+&amp; - P(A \cap B) - P(A \cap C) - P(B \cap C) \\
+&amp; + P(A \cap B \cap C)
+\end{align*}$$`
+
+  **Proof:**
+  `$$\begin{align*}
+    P(A \cup B \cup C) = &amp;P((A \cup B) \cup C) \\
+    = &amp; P(A \cup B) + P(C) - P((A \cup B) \cap C) \\
+    = &amp; P(A) + P(B) - P(A \cap B) + P(C) \\
+    &amp; - P((A \cap C) \cup (B \cap C)) \\
+    = &amp; P(A) + P(B) + P(C) \\
+    &amp; - P(A \cap B) - P(A \cap C) - P(B \cap C) \\
+    &amp; + P(A \cap B \cap C)
+\end{align*}$$`
+
+---
+class: inverse, center, middle
+
+# Counting techniques
+
 ---
 
 ## Counting and operations principles
@@ -122,9 +165,24 @@ class: inverse, center, middle
     
 ---
 
-## Problem 1
+### Problem 2.1
 
-&lt;img src="problem_1.jpg" width="95%" style="display: block; margin: auto;" /&gt;
+[Evaluate the probability by counting techniques first. Then use `R` to mimic the random experiment, and get an "approximation" for the probability.]
+
+If `\(3\)` balls are "randomly drawn" from a bowl containing `\(6\)` white and `\(5\)` black balls, what is the probability that one of the balls is white and the other two black?
+
+--
+
+  **Solution** `$$\frac{C(6,1)C(5,2)}{C(6+5,3)}$$`
+
+--
+
+  **Solution** We can also consider the order of the balls: 
+  `$$\frac{C(6,1)C(5,2)P(3,3)}{P(6+5,3)}$$`
+
+---
+
+### Experiments
 
 
 ``` r
@@ -148,7 +206,7 @@ n_success / n_rep
 ---
 class: inverse, center, middle
 
-# Conditional Probability
+# Conditional probability
 
 ---
 
@@ -160,34 +218,273 @@ class: inverse, center, middle
 
 --
 
-2. Let `\(A\)` and `\(B\)` be two events in a sample space `\(S\)`. `\(A\)` and `\(B\)` are called **independent** if `\(P(A \cap B) = P(A)P(B)\)`.
+2. Let `\(B_1, B_2, \ldots, B_n\)` be a partition (both **exhaustive** and **mutually exclusive**) of the sample space `\(S\)` such that `\(P(B_i) \neq 0\)` for all `\(B_i\)`. Then for any event `\(A\)`:
+`$$P(A) = \sum_{i=1}^{n} P(A \cap B_i) = \sum_{i=1}^{n} P(A \mid B_i) P(B_i) \quad \text{(Law of total probability)}$$`
+`$$P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{P(A)} = \frac{P(A \mid B_i) P(B_i)}{\sum_{j=1}^{n} P(A \mid B_j) P(B_j)} \quad \text{(Bayes' Theorem)}$$`
+
+---
+
+### Problem 3.1
+
+i) Let `\(A\)` and `\(B\)` be two events such that `\(P(A) = \frac{1}{2}\)` and `\(P(B) = \frac{2}{3}\)`. If `\(P(A \cup B) = \frac{5}{6}\)`, then what is the probability that both `\(A\)` and `\(B\)` occur?
 
 --
 
-3. Let `\(B_1, B_2, \ldots, B_n\)` be a partition (both **exhaustive** and **mutually exclusive**) of the sample space `\(S\)` such that `\(P(B_i) \neq 0\)` for all `\(B_i\)`. Then for any event `\(A\)`:
+  **Solution**
+  Given that `\(P(A) = \frac{1}{2}\)`, `\(P(B) = \frac{2}{3}\)`, `\(P(A \cup B) = \frac{5}{6}\)`, we have:
+  `$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$`
+  `$$P(A \cap B) = P(A) + P(B) - P(A \cup B) = \frac{1}{2} + \frac{2}{3} - \frac{5}{6} = \frac{1}{3}$$`
 
-   `$$P(A) = \sum_{i=1}^{n} P(A \cap B_i) = \sum_{i=1}^{n} P(A \mid B_i) P(B_i) \quad \text{(Law of total probability)}$$`
+--
 
-   `$$P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{P(A)} = \frac{P(A \mid B_i) P(B_i)}{\sum_{j=1}^{n} P(A \mid B_j) P(B_j)} \quad \text{(Bayes' Theorem)}$$`
-   
----
+ii) What is the probability that `\(A\)` occurs conditioned on that event `\(B\)` already occurs?
 
-## Problem 2
-
-&lt;img src="problem_2.jpg" width="95%" style="display: block; margin: auto;" /&gt;
-
-
----
-
-## Problem 3
-
-&lt;img src="problem_3.jpg" width="95%" style="display: block; margin: auto;" /&gt;
+--
+  
+  **Solution** 
+  `$$P(A \mid B) = \frac{P(A \cap B)}{P(B)} = \frac{1}{3} \div \frac{2}{3} = \frac{1}{2}$$`
 
 ---
 
-## Problem 4
+### Problem 3.2
 
-&lt;img src="problem_4.jpg" width="95%" style="display: block; margin: auto;" /&gt;
+A student takes a multiple choice examination where each question has 5 possible answers: A, B, C, D, E. The student works a question correctly if she knows the answer. If she does not know the answer, she picks a letter randomly among the five possible letters. Suppose the student knows the answer to 70% of the questions.
+
+i) What is the probability that on a question chosen at random, the student gets the answer correctly?
+
+--
+
+  **Solution** 
+  `$$\begin{align*}
+  P(\text{correct}) = &amp; P(\text{correct} \mid \text{knows the answer}) \times P(\text{knows the answer}) \\
+  &amp; + P(\text{correct} \mid \text{does not know the answer}) \\
+  &amp; \times P(\text{does not know the answer}) \\
+  = &amp; 1 \times 0.7 + 0.2 \times 0.3 = 0.76.
+  \end{align*}$$`
+
+---
+
+### Problem 3.2
+
+ii) Given that the student got the correct answer to this question chosen at random, what is the probability that she actually did not know the answer?
+
+--
+
+  **Solution** 
+  `$$\begin{align*}
+  &amp; P(\text{did not know the answer} \mid \text{correct}) \\
+  = &amp; \frac{P(\text{did not know the answer} \cap \text{correct})}{P(\text{correct})} \\
+  = &amp; \frac{0.3 \times 0.2}{0.76}.
+  \end{align*}$$`
+
+---
+
+### Problem 3.3
+
+I have two pockets. There are 3 red balls and 4 blue balls in the first pocket. In the second pocket, there are 4 red balls and 3 blue balls. Suppose that I pick up one ball randomly from the first pocket and put it into my second pocket. Then I pick up one ball randomly from my second pocket.
+
+i) The probability of the first selected ball (from the first pocket) is red ?
+
+--
+
+  **Solution** 
+  `$$P(\text{the first ball is red}) = \frac{3}{3+4} = \frac{3}{7}$$`
+
+---
+
+### Problem 3.3
+
+ii) The probability of the second selected ball (from the second pocket) is red ?
+
+--
+
+  **Solution** 
+  `$$\begin{align*}
+  &amp; P(\text{the second ball is red}) \\
+  = &amp; P(\text{the second ball is red} \cap \text{the first ball is red}) \\
+  &amp; + P(\text{the second ball is red} \cap \text{the first ball is blue}) \\
+  = &amp; P(\text{the second ball is red} \mid \text{the first ball is red}) P(\text{the first ball is red}) \\
+  &amp; + P(\text{the second ball is red} \mid \text{the first ball is red}) P(\text{the first ball is blue}) \\
+  = &amp; \frac{4+1}{4+3+1} \times \frac{3}{3+4} + \frac{4}{4+3+1} \times \frac{4}{3+4} = \frac{31}{56}.
+  \end{align*}$$`
+
+---
+
+### Problem 3.3
+
+iii) Conditioned on that the second ball is red, what is the probability that the first ball is red?
+
+--
+
+  **Solution** 
+  `$$\begin{align*}
+  &amp; P(\text{first ball is red} \mid \text{second ball is red}) \\
+  = &amp; \frac{P(\text{the first ball is red} \cap \text{the second ball is red})}{P(\text{the second ball is red})} \\
+  = &amp; \frac{P(\text{the second ball is red} \mid \text{the first ball is red}) P(\text{the first ball is red})}{P(\text{the second ball is red})} \\
+  = &amp; \frac{\frac{4+1}{4+3+1} \times \frac{3}{3+4}}{\frac{31}{56}} = \frac{15}{31}.
+  \end{align*}$$`
+
+---
+
+### Problem 3.4
+
+There is a 50-50 chance that the queen carries the gene of hemophilia. If she is a carrier, then each prince has a 50-50 chance of having hemophilia independently. If the queen is not a carrier, the prince will not have the disease. Suppose the queen has had three princes. 
+
+What is the probability the queen is a carrier?
+
+--
+
+  **Solution**
+  `$$\begin{align*}
+  &amp; P(\text{carrier} | \text{three healthy princes}) \\
+  = &amp; \frac{P(\text{carrier} \cap \text{three healthy princes})}{P(\text{three healthy princes})} \\
+  = &amp; \frac{P(\text{three healthy princes} | \text{carrier}) \cdot P(\text{carrier})}{P(\text{three healthy princes})}
+  \end{align*}$$`
+
+---
+
+### Problem 3.4
+
+  **Solution**
+  We have known that:
+  `$$P(\text{carrier}) = \frac{1}{2}, \quad P(\text{three healthy princes} | \text{carrier}) = (\frac{1}{2})^3 = \frac{1}{8}.$$`
+  The marginal probability is:
+  `$$\begin{align*}
+  &amp; P(\text{three healthy princes}) \\
+  = &amp; P(\text{three healthy princes} \mid \text{carrier}) \cdot P(\text{carrier}) \\
+  &amp; + P(\text{three healthy princes} \mid \text{not carrier}) \cdot P(\text{not carrier}) \\
+  = &amp; \frac{1}{8} \cdot \frac{1}{2} + 1 \cdot \frac{1}{2} = \frac{9}{16}.
+  \end{align*}$$`
+  
+  Therefore,
+  `$$\begin{align*}
+  P(\text{carrier} | \text{three healthy princes}) = \frac{\frac{1}{8} \cdot \frac{1}{2}}{\frac{9}{16}} = \frac{1}{9}
+  \end{align*}$$`
+
+---
+
+### Problem 3.5
+
+Let `\(A\)` and `\(B\)` be two events in the sample space `\(S\)` such that `\(P(B) &gt; 0\)`. We know that the conditional probability that `\(A\)` will occur given that `\(B\)` has occurred is defined to be
+
+`$$P(A | B) = \frac{P(A \cap B)}{P(B)}.$$`
+
+Show that the conditional probability satisfies the following properties (which implies "conditional probability is also a probability"):
+
+i) `\(P(A | B) \geq 0\)`, for any event `\(A\)`.  
+
+ii) `\(P(S | B) = 1\)`.  
+
+iii) For any sequence of mutually exclusive events `\(A_1, A_2, \ldots\)`,
+
+`$$P\left(\bigcup_{k=1}^{\infty} A_k \mid B\right) = \sum_{k=1}^{\infty} P(A_k | B).$$`
+
+
+---
+
+### Problem 3.6
+
+A man has five coins, two of which are double-headed (i.e., both faces are "Heads"), one is double-tailed (i.e., both faces are "Tails"), and two are normal (i.e., the coin has one "Head" and one "Tail"). Consider the following scenarios successively, and answer each question.
+
+i) The man shuts his eyes, picks a coin at random, and tosses it. What is the probability that the lower face of the coin is a head?
+
+ii) The man then opens his eyes and sees that the coin is showing a head. What is the probability that the lower face is a head?
+
+iii) The man shuts his eyes again, and tosses the coin again. What is the probability that the lower face is a head?
+
+iv) The man opens his eyes and sees that the coin is showing a head. What is the probability that the lower face is a head?
+
+---
+class: inverse, center, middle
+
+# Idenpendence
+
+---
+
+## Independence
+
+--
+
+1. **Definition** Let `\(A\)` and `\(B\)` be two events in a sample space `\(S\)`. `\(A\)` and `\(B\)` are called **independent** if `\(P(A \cap B) = P(A)P(B)\)`.
+
+--
+
+2. The following statements are equivalent:
+
+    * `\(A\)` and `\(B\)` are **independent**.
+
+    * `\(P(A \mid B) = P(A)\)`, `\(P(B \mid A) = P(B)\)`.
+    
+    * `\(P(A \cap B) = P(A \mid B) P(B) = P(B \mid A) P(A) = P(A)P(B)\)`.
+    
+--
+
+3. The following statements are also equivalent:
+
+    * `\(A\)` and `\(B\)` are **independent**.
+    
+    * `\(A\)` and `\(B^c\)` are **independent**.
+    
+    * `\(A^c\)` and `\(B\)` are **independent**.
+    
+    * `\(A^c\)` and `\(B^c\)` are **independent**.
+
+---
+
+### Problem 4.1
+
+A town has two fire engines operating independently. The probability that a specific engine is available when needed is `\(0.96\)`.
+
+i) What is the probability that neither is available when needed?
+
+--
+
+  **Solution**
+  Let `\(P(A_1) = 0.96\)` and `\(P(A_2) = 0.96\)` be the probabilities that engines 1 and 2 are available, respectively.
+  Then the probability that an engine is not available is:
+  `$$P(A_1^c) = 0.04, \quad P(A_2^c) = 0.04$$`
+  The probability that neither is available is:
+  `$$P(A_1^c) \cdot P(A_2^c) = 0.04 \times 0.04 = 0.0016$$`
+
+--
+
+ii) What is the probability that only one fire engine is available when needed?
+
+--
+
+  **Solution** 
+  The probability that only one is available is:
+  `$$P(A_1) \cdot P(A_2^c) + P(A_1^c) \cdot P(A_2) = 0.96 \times 0.04 + 0.04 \times 0.96 = 0.0768$$`
+
+---
+
+### Problem 4.2
+
+Let `\(A\)` and `\(B\)` be two independent events such that `\(P(A) = \frac{2}{7}\)` and `\(P(B) = \frac{1}{4}\)`. Find `\(P(A^c \cup B^c)\)`.
+
+--
+
+  **Solution**
+  Given that `\(P(A) = \frac{2}{7}\)` and `\(P(B) = \frac{1}{4}\)`, we have:
+  `$$P(A^c) = 1 - P(A) = \frac{5}{7}, \quad P(B^c) = 1 - P(B) = \frac{3}{4}.$$`
+
+  Since `\(A\)` and `\(B\)` are independent, we have:
+  `$$P(A^c \cap B^c) = P(A^c) \cdot P(B^c).$$`
+
+  Thus, the probability `\(P(A^c \cup B^c)\)` is:
+  `$$P(A^c \cup B^c) = P(A^c) + P(B^c) - P(A^c \cap B^c) = \frac{5}{7} + \frac{3}{4} - \frac{5}{7} \times \frac{3}{4} = \frac{13}{14}$$`
+
+---
+
+### Problem 4.3
+
+An electrical system consists of four components as illustrated in the figure below. The reliability (probability of working) of each component is also shown in the figure. Assume that the four components work independently.
+
+i) Find the probability that the entire system works.
+
+ii) Find the probability that the component `\(C\)` does not work, given that the entire system works.
+
+&lt;img src="problem_4_3.jpg" width="65%" style="display: block; margin: auto;" /&gt;
 
 ---
 class: inverse, center, middle
