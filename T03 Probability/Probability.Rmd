@@ -407,7 +407,7 @@ class: inverse, center, middle
 
 --
 
-1. **Definition** Let $A$ and $B$ be two events in a sample space $S$. $A$ and $B$ are called **independent** if $P(A \cap B) = P(A)P(B)$.
+1. **Definition**: Let $A$ and $B$ be two events in a sample space $S$. $A$ and $B$ are called **independent** if $P(A \cap B) = P(A)P(B)$.
 
 --
 
