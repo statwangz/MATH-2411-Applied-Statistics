@@ -100,22 +100,6 @@ class: inverse, center, middle
 ### Problem 1.1
 
 For any events `\(A\)`, `\(B\)`, `\(C\)`, show that
-`$$P((A \cup B) | C) = P(A | C) + P(B | C) - P((A \cap B) | C)$$`
-
-  **Proof** 
-    `$$\begin{align*}
-      P((A \cup B) | C) = &amp;\frac{P((A \cup B) \cap C)}{P(C)}, \\
-      P((A \cup B) \cap C) = &amp;P((A \cap C) \cup (B \cap C))  \\
-      = &amp;P(A \cap C) + P(B \cap C) - P(A \cap B \cap C), \\
-      P((A \cup B) | C) = &amp;\frac{P(A \cap C)}{P(C)} + \frac{P(B \cap C)}{P(C)} - \frac{P(A \cap B \cap C)}{P(C)}  \\
-      = &amp;P(A | C) + P(B | C) - P((A \cap B) | C).
-    \end{align*}$$`
-
----
-
-### Problem 1.2
-
-For any events `\(A\)`, `\(B\)`, `\(C\)`, show that
 `$$\begin{align*}
 P(A \cup B \cup C) = &amp; P(A) + P(B) + P(C) \\
 &amp; - P(A \cap B) - P(A \cap C) - P(B \cap C) \\
@@ -226,6 +210,22 @@ class: inverse, center, middle
 
 ### Problem 3.1
 
+For any events `\(A\)`, `\(B\)`, `\(C\)`, show that
+`$$P((A \cup B) | C) = P(A | C) + P(B | C) - P((A \cap B) | C)$$`
+
+  **Proof** 
+    `$$\begin{align*}
+      P((A \cup B) | C) = &amp;\frac{P((A \cup B) \cap C)}{P(C)}, \\
+      P((A \cup B) \cap C) = &amp;P((A \cap C) \cup (B \cap C))  \\
+      = &amp;P(A \cap C) + P(B \cap C) - P(A \cap B \cap C), \\
+      P((A \cup B) | C) = &amp;\frac{P(A \cap C)}{P(C)} + \frac{P(B \cap C)}{P(C)} - \frac{P(A \cap B \cap C)}{P(C)}  \\
+      = &amp;P(A | C) + P(B | C) - P((A \cap B) | C).
+    \end{align*}$$`
+
+---
+
+### Problem 3.2
+
 i) Let `\(A\)` and `\(B\)` be two events such that `\(P(A) = \frac{1}{2}\)` and `\(P(B) = \frac{2}{3}\)`. If `\(P(A \cup B) = \frac{5}{6}\)`, then what is the probability that both `\(A\)` and `\(B\)` occur?
 
 --
@@ -246,7 +246,7 @@ ii) What is the probability that `\(A\)` occurs conditioned on that event `\(B\)
 
 ---
 
-### Problem 3.2
+### Problem 3.3
 
 A student takes a multiple choice examination where each question has 5 possible answers: A, B, C, D, E. The student works a question correctly if she knows the answer. If she does not know the answer, she picks a letter randomly among the five possible letters. Suppose the student knows the answer to 70% of the questions.
 
@@ -264,7 +264,7 @@ i) What is the probability that on a question chosen at random, the student gets
 
 ---
 
-### Problem 3.2
+### Problem 3.3
 
 ii) Given that the student got the correct answer to this question chosen at random, what is the probability that she actually did not know the answer?
 
@@ -279,7 +279,7 @@ ii) Given that the student got the correct answer to this question chosen at ran
 
 ---
 
-### Problem 3.3
+### Problem 3.4
 
 I have two pockets. There are 3 red balls and 4 blue balls in the first pocket. In the second pocket, there are 4 red balls and 3 blue balls. Suppose that I pick up one ball randomly from the first pocket and put it into my second pocket. Then I pick up one ball randomly from my second pocket.
 
@@ -292,7 +292,7 @@ i) The probability of the first selected ball (from the first pocket) is red ?
 
 ---
 
-### Problem 3.3
+### Problem 3.4
 
 ii) The probability of the second selected ball (from the second pocket) is red ?
 
@@ -310,7 +310,7 @@ ii) The probability of the second selected ball (from the second pocket) is red 
 
 ---
 
-### Problem 3.3
+### Problem 3.4
 
 iii) Conditioned on that the second ball is red, what is the probability that the first ball is red?
 
@@ -326,7 +326,7 @@ iii) Conditioned on that the second ball is red, what is the probability that th
 
 ---
 
-### Problem 3.4
+### Problem 3.5
 
 There is a 50-50 chance that the queen carries the gene of hemophilia. If she is a carrier, then each prince has a 50-50 chance of having hemophilia independently. If the queen is not a carrier, the prince will not have the disease. Suppose the queen has had three princes. 
 
@@ -343,7 +343,7 @@ What is the probability the queen is a carrier?
 
 ---
 
-### Problem 3.4
+### Problem 3.5
 
   **Solution**
   We have known that:
@@ -363,7 +363,7 @@ What is the probability the queen is a carrier?
 
 ---
 
-### Problem 3.5
+### Problem 3.6
 
 Let `\(A\)` and `\(B\)` be two events in the sample space `\(S\)` such that `\(P(B) &gt; 0\)`. We know that the conditional probability that `\(A\)` will occur given that `\(B\)` has occurred is defined to be
 
@@ -382,7 +382,7 @@ iii) For any sequence of mutually exclusive events `\(A_1, A_2, \ldots\)`,
 
 ---
 
-### Problem 3.6
+### Problem 3.7
 
 A man has five coins, two of which are double-headed (i.e., both faces are "Heads"), one is double-tailed (i.e., both faces are "Tails"), and two are normal (i.e., the coin has one "Head" and one "Tail"). Consider the following scenarios successively, and answer each question.
 
@@ -405,7 +405,7 @@ class: inverse, center, middle
 
 --
 
-1. **Definition** Let `\(A\)` and `\(B\)` be two events in a sample space `\(S\)`. `\(A\)` and `\(B\)` are called **independent** if `\(P(A \cap B) = P(A)P(B)\)`.
+1. **Definition**: Let `\(A\)` and `\(B\)` be two events in a sample space `\(S\)`. `\(A\)` and `\(B\)` are called **independent** if `\(P(A \cap B) = P(A)P(B)\)`.
 
 --
 
