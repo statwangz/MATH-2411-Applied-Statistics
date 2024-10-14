@@ -330,7 +330,7 @@ iii) Conditioned on that the second ball is red, what is the probability that th
 
 ### Problem 3.5
 
-There is a 50-50 chance that the queen carries the gene of hemophilia. If she is a carrier, then each prince has a 50-50 chance of having hemophilia independently. If the queen is not a carrier, the prince will not have the disease. Suppose the queen has had three princes. 
+There is a 50-50 chance that the queen carries the gene of hemophilia. If she is a carrier, then each prince has a 50-50 chance of having hemophilia independently. If the queen is not a carrier, the prince will not have the disease. Suppose the queen has had three healthy princes. 
 
 What is the probability the queen is a carrier?
 
@@ -350,7 +350,9 @@ What is the probability the queen is a carrier?
   **Solution**
   We have known that:
   $$P(\text{carrier}) = \frac{1}{2}, \quad P(\text{three healthy princes} | \text{carrier}) = (\frac{1}{2})^3 = \frac{1}{8}.$$
-  The marginal probability is:
+  The latter one is obtained from the [conditional independence](https://en.wikipedia.org/wiki/Conditional_independence).
+  
+  Then the marginal probability is calculated as:
   $$\begin{align*}
   & P(\text{three healthy princes}) \\
   = & P(\text{three healthy princes} \mid \text{carrier}) \cdot P(\text{carrier}) \\
