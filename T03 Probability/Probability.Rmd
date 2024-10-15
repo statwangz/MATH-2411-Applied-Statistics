@@ -213,15 +213,15 @@ $$P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{P(A)} = \frac{P(A \mid B_i) P(B_i)
 ### Problem 3.1
 
 For any events $A$, $B$, $C$, show that
-$$P((A \cup B) | C) = P(A | C) + P(B | C) - P((A \cap B) | C)$$
+$$P((A \cup B) \mid C) = P(A \mid C) + P(B \mid C) - P((A \cap B) \mid C)$$
 
   **Proof** 
     $$\begin{align*}
-      P((A \cup B) | C) = &\frac{P((A \cup B) \cap C)}{P(C)}, \\
+      P((A \cup B) \mid C) = &\frac{P((A \cup B) \cap C)}{P(C)}, \\
       P((A \cup B) \cap C) = &P((A \cap C) \cup (B \cap C))  \\
       = &P(A \cap C) + P(B \cap C) - P(A \cap B \cap C), \\
-      P((A \cup B) | C) = &\frac{P(A \cap C)}{P(C)} + \frac{P(B \cap C)}{P(C)} - \frac{P(A \cap B \cap C)}{P(C)}  \\
-      = &P(A | C) + P(B | C) - P((A \cap B) | C).
+      P((A \cup B) \mid C) = &\frac{P(A \cap C)}{P(C)} + \frac{P(B \cap C)}{P(C)} - \frac{P(A \cap B \cap C)}{P(C)}  \\
+      = &P(A \mid C) + P(B \mid C) - P((A \cap B) \mid C).
     \end{align*}$$
 
 ---
@@ -330,78 +330,19 @@ iii) Conditioned on that the second ball is red, what is the probability that th
 
 ### Problem 3.5
 
-There is a 50-50 chance that the queen carries the gene of hemophilia. If she is a carrier, then each prince has a 50-50 chance of having hemophilia independently. If the queen is not a carrier, the prince will not have the disease. Suppose the queen has had three healthy princes. 
-
-What is the probability the queen is a carrier?
-
---
-
-  **Solution**
-  $$\begin{align*}
-  & P(\text{carrier} | \text{three healthy princes}) \\
-  = & \frac{P(\text{carrier} \cap \text{three healthy princes})}{P(\text{three healthy princes})} \\
-  = & \frac{P(\text{three healthy princes} | \text{carrier}) \cdot P(\text{carrier})}{P(\text{three healthy princes})}
-  \end{align*}$$
-  
-  We know that:
-  $$P(\text{carrier}) = \frac{1}{2}, \quad P(\text{non-carrier}) = \frac{1}{2}.$$
----
-
-### Problem 3.5
-
-  **Solution**
-  We also know that:
-  $$\begin{align*}
-  & P(\text{three healthy princes} | \text{carrier}) = (\frac{1}{2})^3 = \frac{1}{8}, \\
-  & P(\text{three healthy princes} | \text{non-carrier}) = 1^3 = 1,
-  \end{align*}$$
-  which can be obtained from the [conditional independence](https://en.wikipedia.org/wiki/Conditional_independence).
-  
-  Then the marginal probability is calculated as:
-  $$\begin{align*}
-  & P(\text{three healthy princes}) \\
-  = & P(\text{three healthy princes} \mid \text{carrier}) \cdot P(\text{carrier}) \\
-  & + P(\text{three healthy princes} \mid \text{not carrier}) \cdot P(\text{not carrier}) \\
-  = & \frac{1}{8} \cdot \frac{1}{2} + 1 \cdot \frac{1}{2} = \frac{9}{16}.
-  \end{align*}$$
-  
-  Therefore,
-  $$\begin{align*}
-  P(\text{carrier} | \text{three healthy princes}) = \frac{\frac{1}{8} \cdot \frac{1}{2}}{\frac{9}{16}} = \frac{1}{9}.
-  \end{align*}$$
-
----
-
-### Problem 3.6
-
 Let $A$ and $B$ be two events in the sample space $S$ such that $P(B) > 0$. We know that the conditional probability that $A$ will occur given that $B$ has occurred is defined to be
 
-$$P(A | B) = \frac{P(A \cap B)}{P(B)}.$$
+$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}.$$
 
 Show that the conditional probability satisfies the following properties (which implies "conditional probability is also a probability"):
 
-i) $P(A | B) \geq 0$, for any event $A$.  
+i) $P(A \mid B) \geq 0$, for any event $A$.  
 
-ii) $P(S | B) = 1$.  
+ii) $P(S \mid B) = 1$.  
 
 iii) For any sequence of mutually exclusive events $A_1, A_2, \ldots$,
 
-$$P\left(\bigcup_{k=1}^{\infty} A_k \mid B\right) = \sum_{k=1}^{\infty} P(A_k | B).$$
-
-
----
-
-### Problem 3.7
-
-A man has five coins, two of which are double-headed (i.e., both faces are "Heads"), one is double-tailed (i.e., both faces are "Tails"), and two are normal (i.e., the coin has one "Head" and one "Tail"). Consider the following scenarios successively, and answer each question.
-
-i) The man shuts his eyes, picks a coin at random, and tosses it. What is the probability that the lower face of the coin is a head?
-
-ii) The man then opens his eyes and sees that the coin is showing a head. What is the probability that the lower face is a head?
-
-iii) The man shuts his eyes again, and tosses the coin again. What is the probability that the lower face is a head?
-
-iv) The man opens his eyes and sees that the coin is showing a head. What is the probability that the lower face is a head?
+$$P\left(\bigcup_{k=1}^{\infty} A_k \mid B\right) = \sum_{k=1}^{\infty} P(A_k \mid B).$$
 
 ---
 class: inverse, center, middle
@@ -496,6 +437,152 @@ ii) Find the probability that the component $C$ does not work, given that the en
 ```{r out.width='65%', fig.align='center', echo=FALSE}
 knitr::include_graphics("problem_4_3.jpg")
 ```
+
+---
+
+## Conditional independence
+
+Let $A$, $B$, and $C$ be events. $A$ and $B$ are said to be **conditionally independent** given $C$ if and only if $P(C) > 0$ and:
+
+$$
+P(A \mid B, C) = P(A \mid C)
+$$
+
+This property is often written: $(A \perp\!\!\!\perp B \mid C)$, which should be read as '$A$ is independent of $B$ given $C$'.
+
+Equivalently, conditional independence may be stated as:
+
+$$
+P(A, B \mid C) = P(A \mid C) P(B \mid C)
+$$
+
+where $P(A, B \mid C)$ is the joint probability of $A$ and $B$ given $C$. This alternate formulation states that $A$ and $B$ are independent events, given $C$.
+
+It demonstrates that $(A \perp\!\!\!\perp B \mid C)$ is equivalent to $(B \perp\!\!\!\perp A \mid C)$.
+
+---
+
+### Problem 5.1
+
+There is a 50-50 chance that the queen carries the gene of hemophilia. If she is a carrier, then each prince has a 50-50 chance of having hemophilia independently. If the queen is not a carrier, the prince will not have the disease. Suppose the queen has had three healthy princes. 
+
+What is the probability the queen is a carrier?
+
+--
+
+  **Solution**
+  $$\begin{align*}
+  & P(\text{carrier} \mid \text{three healthy princes}) \\
+  = & \frac{P(\text{carrier} \cap \text{three healthy princes})}{P(\text{three healthy princes})} \\
+  = & \frac{P(\text{three healthy princes} \mid \text{carrier}) \cdot P(\text{carrier})}{P(\text{three healthy princes})}
+  \end{align*}$$
+  
+  We know that:
+  $$P(\text{carrier}) = \frac{1}{2}, \quad P(\text{non-carrier}) = \frac{1}{2}.$$
+  
+---
+
+### Problem 5.1
+
+  **Solution**
+  We also know that:
+  $$\begin{align*}
+  & P(\text{three healthy princes} \mid \text{carrier}) = (\frac{1}{2})^3 = \frac{1}{8}, \\
+  & P(\text{three healthy princes} \mid \text{non-carrier}) = 1^3 = 1,
+  \end{align*}$$
+  which can be obtained from the [conditional independence](https://en.wikipedia.org/wiki/Conditional_independence).
+  
+  Then the marginal probability is calculated as:
+  $$\begin{align*}
+  & P(\text{three healthy princes}) \\
+  = & P(\text{three healthy princes} \mid \text{carrier}) \cdot P(\text{carrier}) \\
+  & + P(\text{three healthy princes} \mid \text{not carrier}) \cdot P(\text{not carrier}) \\
+  = & \frac{1}{8} \cdot \frac{1}{2} + 1 \cdot \frac{1}{2} = \frac{9}{16}.
+  \end{align*}$$
+  
+  Therefore,
+  $$\begin{align*}
+  P(\text{carrier} \mid \text{three healthy princes}) = \frac{\frac{1}{8} \cdot \frac{1}{2}}{\frac{9}{16}} = \frac{1}{9}.
+  \end{align*}$$
+  
+---
+class: inverse, center, middle
+
+# Does conditional independence imply marginal independence?
+
+That is, given $P(A,B \mid C) = P(A \mid C) \cdot P(B \mid C)$, can we say $P(A,B) = P(A) \cdot P(B)$?
+
+---
+
+### Let's use Problem 5.1 as an example!
+
+--
+
+To simplify the problem, we consider only two princes and use $H_i$ to denote the event that the $i$-th prince is healthy for $i = 1,2$.
+
+We have known that $H_1$ and $H_2$ are independent given the queen is a carrier, that is
+$$\begin{align*}
+P(H_1 \cap H_2 \mid \text{carrier}) = & P(H_1 \mid \text{carrier}) \cdot P(H_2 \mid \text{carrier}) \\
+= & \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{4}.
+\end{align*}$$
+
+--
+
+Can we then state that $H_1$ and $H_2$ are independent events?
+$$
+P(H_1 \cap H_2) \overset{?}{=} P(H_1 ) \cdot P(H_2)
+$$
+
+---
+
+### Let's use Problem 5.1 as an example!
+
+We first check the right hand side and calculate the marginal probabilities of $H_1$ and $H_2$:
+$$\begin{align*}
+P(H_i) = & P(H_i \cap \text{carrier}) + P(H_i \cap \text{non-carrier}) \\
+= & P(H_i \mid \text{carrier}) \cdot P(\text{carrier}) \\
+& + P(H_i \mid \text{non-carrier}) \cdot P(\text{non-carrier}) \\
+= & \frac{1}{2} \cdot \frac{1}{2} + 1 \cdot \frac{1}{2} = \frac{3}{4}, \quad \text{for} \ i = 1,2.
+\end{align*}$$
+Thus,
+$$
+P(H_1) \cdot P(H_2) = \frac{3}{4} \cdot \frac{3}{4} = \frac{9}{16}.
+$$
+
+---
+
+### Let's use Problem 5.1 as an example!
+
+Then we turn to the left hand side of the equation:
+$$\begin{align*}
+P(H_1 \cap H_2) = & P(H_1 \cap H_2 \mid \text{carrier}) \cdot P(\text{carrier}) \\
+& + P(H_1 \cap H_2 \mid \text{non-carrier}) \cdot P(\text{non-carrier}) \\
+= & P(H_1 \mid \text{carrier}) \cdot P(H_2 \mid \text{carrier}) \cdot P(\text{carrier}) \\
+& + P(H_1 \mid \text{non-carrier}) \cdot P(H_2 \mid \text{non-carrier}) \cdot P(\text{non-carrier}) \\
+= & \frac{1}{2} \cdot \frac{1}{2} \cdot \frac{1}{2} + 1 \cdot 1 \cdot \frac{1}{2} = \frac{5}{8}.
+\end{align*}$$
+
+--
+
+**We found that the previous equation does not hold, which means that $H_1$ and $H_2$ are not independent!**
+
+--
+
+The two princesses are correlated since they have the same mother.
+
+---
+
+### Problem 5.2
+
+A man has five coins, two of which are double-headed (i.e., both faces are "Heads"), one is double-tailed (i.e., both faces are "Tails"), and two are normal (i.e., the coin has one "Head" and one "Tail"). Consider the following scenarios successively, and answer each question.
+
+i) The man shuts his eyes, picks a coin at random, and tosses it. What is the probability that the lower face of the coin is a head?
+
+ii) The man then opens his eyes and sees that the coin is showing a head. What is the probability that the lower face is a head?
+
+iii) The man shuts his eyes again, and tosses the coin again. What is the probability that the lower face is a head?
+
+iv) The man opens his eyes and sees that the coin is showing a head. What is the probability that the lower face is a head?
 
 ---
 class: inverse, center, middle
