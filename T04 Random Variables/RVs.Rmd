@@ -84,9 +84,47 @@ When it exists, the population variance satisfies the following properties: Supp
 - $\text{Var}(aX + b) = a^2 \text{Var}(X)$
 - If $X$ and $Y$ are independent random variables, then $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$.
 
+
 ---
 
-## Problem 1
+### Problem 1.1
+
+Let $W$ be a random variable giving the number of heads minus the number of tails in four tosses of a coin. List the elements of the sample space $S$ for the four tosses of the coin and to each sample point assign a value $w$ of $W$.
+
+--
+
+  **Solution** Let 'H' denote head and 'T' denote tail. The sample space $S$ and the random variable $W$ are as follows:
+
+| $S$                               | $W$ |
+|-----------------------------------|-----|
+| HHHH                              | 4   |
+| HHHT, HHTH, HTHH, THHH            | 2   |
+| HHTT, HTHT, HTTH, THHT, THTH, TTHH| 0   |
+| HTTT, THTT, TTHT, TTTH            | -2  |
+| TTTT                              | -4  |
+
+---
+
+### Problem 1.2
+
+A coin is flipped until 2 heads occur in succession. List only those elements of the sample space that require 6 or fewer tosses. Is this a discrete sample space? Explain.
+
+--
+
+  **Solution** Let 'H' denote head and 'T' denote tail. The possible elements are:
+
+- HH
+- THH
+- TTHH, HTHH
+- HTTHH, TTTTH, THTHH
+- TTTTHH, HTTTHH, THTTHH, TTHTHH, HTHTHH
+
+The sample space is discrete since it contains finite elements.
+
+
+---
+
+### Problem 1.3
 
 Let $X$ be a random variable with the following probability distribution:
 
@@ -112,7 +150,59 @@ d. Find the CDF of $X$ and plot the graph of the CDF.
 
 ---
 
-## Problem 2
+### Problem 1.4
+
+Given that the cdf (cumulative distribution function) of a discrete random variable $X$ is 
+
+$$
+F(x) = 
+\begin{cases}
+0, & x < 1 \\
+\frac{1}{4}, & 1 \leq x < 3 \\
+\frac{3}{4}, & 3 \leq x < 5 \\
+1, & x \geq 5
+\end{cases}
+$$
+
+i) Find the pmf (probability mass function) of $X$.
+
+ii) Draw the graphs of cdf and pmf of $X$.
+
+iii) Evaluate $P(X > 3)$ and $P(1.5 < X < 5)$.
+
+iv) Let $Y = 3X - 1$, find the population mean and population variance of $Y$.
+
+---
+
+### Problem 2.1
+
+The probability that a patient recovers from a delicate heart operation is $0.8$. What is the probability that
+
+(a) exactly 2 of the next 3 patients who have this operation survive?
+
+--
+
+  **Solution**
+
+  Let $P(A_i) = 0.8$ for $i = 1, 2, 3$. The probability that a patient does not survive is $P(A_i^c) = 0.2$.
+
+The probability that exactly 2 out of 3 patients survive is:
+
+$$\binom{3}{2} \cdot (0.8)^2 \cdot (0.2) = 3 \cdot 0.64 \cdot 0.2 = 0.384$$
+
+--
+
+(b) all of the next 3 patients who have this operation survive?
+
+  **Solution**
+  
+  The probability that all 3 patients survive is:
+
+$$(0.8)^3 = 0.512$$
+
+---
+
+## Problem 2.2
 
 There are 8 female students and 24 male students in MATH2411 Tutorial. For the next 5 weeks, every week after class one student will be chosen randomly to invite everybody for tea. Let $X$ be the total number of female students chosen.
 
@@ -122,7 +212,7 @@ a. Find the probability that the 'paying gender' sequence will be FMMFM.
 
 --
 
-b. Find the probability that the 'paying gender' sequence will be MMF FM.
+b. Find the probability that the 'paying gender' sequence will be MMFFM.
 
 --
 
