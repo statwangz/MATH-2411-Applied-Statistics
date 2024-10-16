@@ -31,3 +31,11 @@ I also provide the PDF version via John Paul Helveston and Garrick Aden-Buie's R
 renderthis::to_pdf(from = "filename.Rmd", complex_slides = TRUE, partial_slides = FALSE)
 ```
 **However, the “complex” slides containing panelsets or other HTML widgets / advanced features might not render well as a PDF.**
+
+## Acknowledgments
+
+- Slides created via Yihui Xie's R package [**xaringan**](https://github.com/yihui/xaringan).
+
+- Theme customized via Garrick Aden-Buie's R package [**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer).
+
+- Tabbed panels created via Garrick Aden-Buie's R package [**xaringanExtra**](https://github.com/gadenbuie/xaringanExtra/).
