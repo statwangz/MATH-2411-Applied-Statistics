@@ -11,14 +11,14 @@
 </p>
 
 ## Course Information
+
+[HKUST Canvas](https://canvas.ust.hk/courses/59569)
+
+[Discord server](https://discord.gg/mAGzzwznQK) for online discussions and Q&A
  
 Instructor: Dr. Jing Yao (<majyao@ust.hk>)
 
 Teaching Assistant: Zhiwei Wang (<zhiwei.wang@connect.ust.hk>)
-
-[HKUST Canvas link](https://canvas.ust.hk/courses/59569)
-
-[Discord server](https://discord.gg/mAGzzwznQK) for discussions and Q&A.
 
 ## Tutorial Files
 
