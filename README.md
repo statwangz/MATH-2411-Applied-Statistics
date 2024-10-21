@@ -32,7 +32,15 @@ I also provide the PDF version via John Paul Helveston and Garrick Aden-Buie's R
 ```r
 renderthis::to_pdf(from = "filename.Rmd", complex_slides = TRUE, partial_slides = FALSE)
 ```
-**However, the “complex” slides containing panelsets or other HTML widgets / advanced features might not render well as a PDF.**
+**However, the “complex” slides containing panelsets or other HTML widgets/advanced features might not render well as a PDF.**
+
+## Resources
+
+- Textbook: _Probability and Statistics for Engineers and Scientists_  by Ronald E. Walpole, Raymond H. Myers, Sharon L. Myers and Keying Ye.
+
+- Lecture Notes: [Canvas](https://canvas.ust.hk/courses/59569)
+
+- Tutorial Slides: [GitHub repository](https://github.com/statwangz/MATH-2411-Applied-Statistics)
 
 ## Acknowledgments
 
