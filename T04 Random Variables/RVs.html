@@ -43,7 +43,7 @@ class: inverse, center, middle
 
 # There are two common types of r.v.'s.
 
-We first talk about the discrete random variable.
+We first talk about the discrete r.v.'s.
 
 ---
 
@@ -149,7 +149,7 @@ d. Find the CDF of `\(X\)` and plot the graph of the CDF.
 
 ### Problem 1.4
 
-Given that the cdf (cumulative distribution function) of a discrete random variable `\(X\)` is 
+Given that the CDF (cumulative distribution function) of a discrete random variable `\(X\)` is 
 
 `$$\begin{align*}
 F(x) = 
@@ -161,13 +161,19 @@ F(x) =
 \end{cases}
 \end{align*}$$`
 
-i) Find the pmf (probability mass function) of `\(X\)`.
+i) Find the PMF (probability mass function) of `\(X\)`.
 
-ii) Draw the graphs of cdf and pmf of `\(X\)`.
+ii) Draw the graphs of CDF and PMF of `\(X\)`.
 
 iii) Evaluate `\(P(X &gt; 3)\)` and `\(P(1.5 &lt; X &lt; 5)\)`.
 
 iv) Let `\(Y = 3X - 1\)`, find the population mean and population variance of `\(Y\)`.
+
+---
+
+### Problem 1.5
+
+Independent trials consisting of rolling a pair of fair six-sided dice are performed. The outcome of a roll is defined as the sum of the two faces turned-up. What is the probability that an outcome of 5 appears before an outcome of 7?
 
 ---
 class: inverse, center, middle
@@ -465,7 +471,7 @@ $$
 
 --
 
-  **Solution** Recall that the pdf of `\(X\)` is 
+  **Solution** Recall that the PDF of `\(X\)` is 
 
 $$
 f(x) = \frac{e^{-\lambda} \lambda^x}{x!} \quad \text{for integers } x = 0, 1, 2, \ldots
@@ -512,7 +518,7 @@ i) What is the probability that
   
 --
 
-  **Solution** The binomial pmf is given by:
+  **Solution** The binomial PMF is given by:
 $$
 P(X = k) = \binom{n}{k} p^k (1-p)^{n-k},
 $$
@@ -546,11 +552,12 @@ p &lt;- 0.004
 
 
 ``` r
-## Use pmf
-prob_a &lt;- 1
-for (k in 0:9) {
-  prob_a &lt;- prob_a - dbinom(x = k, size = n, prob = p)
-}
+## Use PMF
+# prob_a &lt;- 1
+# for (k in 0:9) {
+#   prob_a &lt;- prob_a - dbinom(x = k, size = n, prob = p)
+# }
+prob_a &lt;- 1 - sum(dbinom(x = 0:9, size = n, prob = p))
 prob_a
 ```
 
@@ -558,7 +565,7 @@ prob_a
 
 
 ``` r
-## Use cdf
+## Use CDF
 prob_a &lt;- 1 - pbinom(q = 9, size = n, prob = p)
 prob_a
 ```
@@ -571,11 +578,12 @@ prob_a
 
 
 ``` r
-## Use pmf
-prob_b &lt;- 0
-for (k in 3:8) {
-  prob_b &lt;- prob_b + dbinom(x = k, size = n, prob = p)
-}
+## Use PMF
+# prob_b &lt;- 0
+# for (k in 3:8) {
+#   prob_b &lt;- prob_b + dbinom(x = k, size = n, prob = p)
+# }
+prob_b &lt;- sum(dbinom(x = 3:8, size = n, prob = p))
 prob_b
 ```
 
@@ -583,7 +591,7 @@ prob_b
 
 
 ``` r
-## Use cdf
+## Use CDF
 prob_b &lt;- pbinom(q = 8, size = n, prob = p) - 
   pbinom(q = 2, size = n, prob = p)
 prob_b
@@ -597,7 +605,7 @@ prob_b
 
 
 ``` r
-## Use pmf
+## Use PMF
 prob_c &lt;- dbinom(x = 5, size = n, prob = p)
 prob_c
 ```
@@ -606,7 +614,7 @@ prob_c
 
 
 ``` r
-## Use cdf
+## Use CDF
 prob_c &lt;- pbinom(q = 5, size = n, prob = p) - 
   pbinom(q = 4, size = n, prob = p)
 prob_c
@@ -648,7 +656,7 @@ P(X = k) = \frac{\lambda^k e^{- \lambda}}{k!},
 $$
 where the rate parameter is `\(\lambda = np = 1500 \times 0.004 = 6\)`.
 
-Then we can replace the binomial pmf in i) with the Poisson pmf to approximate the probabilities.
+Then we can replace the binomial PMF in i) with the Poisson PMF to approximate the probabilities.
 
 ---
 
@@ -673,11 +681,12 @@ lambda &lt;- n * p
 
 
 ``` r
-## Use pmf
-prob_a &lt;- 1
-for (k in 0:9) {
-  prob_a &lt;- prob_a - dpois(x = k, lambda = lambda)
-}
+## Use PMF
+# prob_a &lt;- 1
+# for (k in 0:9) {
+#   prob_a &lt;- prob_a - dpois(x = k, lambda = lambda)
+# }
+prob_a &lt;- 1 - sum(dpois(x = 0:9, lambda = lambda))
 prob_a
 ```
 
@@ -685,7 +694,7 @@ prob_a
 
 
 ``` r
-## Use cdf
+## Use CDF
 prob_a &lt;- 1 - ppois(q = 9, lambda = lambda)
 prob_a
 ```
@@ -698,11 +707,12 @@ prob_a
 
 
 ``` r
-## Use pmf
-prob_b &lt;- 0
-for (k in 3:8) {
-  prob_b &lt;- prob_b + dpois(x = k, lambda = lambda)
-}
+## Use PMF
+# prob_b &lt;- 0
+# for (k in 3:8) {
+#   prob_b &lt;- prob_b + dpois(x = k, lambda = lambda)
+# }
+prob_b &lt;- sum(dpois(x = 3:8, lambda = lambda))
 prob_b
 ```
 
@@ -710,7 +720,7 @@ prob_b
 
 
 ``` r
-## Use cdf
+## Use CDF
 prob_b &lt;- ppois(q = 8, lambda = lambda) - 
   ppois(q = 2, lambda = lambda)
 prob_b
@@ -724,7 +734,7 @@ prob_b
 
 
 ``` r
-## Use pmf
+## Use PMF
 prob_c &lt;- dpois(x = 5, lambda = lambda)
 prob_c
 ```
@@ -733,7 +743,7 @@ prob_c
 
 
 ``` r
-## Use cdf
+## Use CDF
 prob_c &lt;- ppois(q = 5, lambda = lambda) - 
   ppois(q = 4, lambda = lambda)
 prob_c
@@ -753,6 +763,223 @@ Assume that the number of flu a person gets in a year follows a Poisson distribu
 Now a medicine to prevent flu is developed and tested.
 Suppose that the medicine is effective for 75% of the people, by reducing the parameter of the Poisson distribution to 3; but it does not work for the other 25% of the people.
 If someone takes this medicine and gets flu twice in one year, what is the probability that the medicine is effective for this person?
+
+--
+
+  **Solution** This is actually a Bayesian problem.
+  
+  The prior probabilities are:
+  `$$P(\text{not effective}) = 0.25, \quad P(\text{effective}) = 0.75.$$`
+
+---
+
+### Problem 2.6
+
+  **Solution** Let `\(\lambda_1 = 5\)` be the original rate parameter, and `\(\lambda_2 = 3\)` be the rate parameter when the medicine is effective.
+The probability of getting the flu twice when the medicine is effective can be calculated using the Poisson PMF:
+$$
+P(X = 2) = \frac{\lambda^2 e^{-\lambda}}{2!},
+$$
+where `\(\lambda = \lambda_1\)` when not effective and `\(\lambda = \lambda_2\)` when effective.
+  
+  Thus, the probability of getting the flu twice if the medicine is not effective:
+$$
+P(\text{gets the flu twice} \mid \text{not effective}) = \frac{5^2 e^{-5}}{2!},
+$$
+and the probability of getting the flu twice if the medicine is not effective:
+$$
+P(\text{gets the flu twice} \mid \text{effective}) = \frac{3^2 e^{-3}}{2!}.
+$$
+
+---
+
+### Problem 2.6
+
+  **Solution** Using the law of total probability, we can calculate the probability of getting the flu twice:
+`$$\begin{align*}
+&amp; P(\text{gets the flu twice}) \\
+= &amp; P(\text{gets the flu twice} \cap \text{not effective}) + P(\text{gets the flu twice} \cap \text{effective})  \\
+= &amp; P(\text{gets the flu twice} \mid \text{not effective}) \cdot P(\text{not effective}) \\
+&amp; + P(\text{gets the flu twice} \mid \text{effective}) \cdot P(\text{effective}) \\
+&amp; = \frac{5^2 e^{-5}}{2!} \cdot 0.25 + \frac{3^2 e^{-3}}{2!} \cdot 0.75.
+\end{align*}$$`
+
+  Then, using the Bayes' theorem:
+`$$\begin{align*}
+&amp; P(\text{effective} \mid \text{gets the flu twice}) \\
+= &amp; \frac{P(\text{gets the flu twice} \mid \text{effective}) \cdot P(\text{effective})}{P(\text{gets the flu twice})} \\
+= &amp; \frac{\frac{3^2 e^{-3}}{2!} \cdot 0.75}{\frac{5^2 e^{-5}}{2!} \cdot 0.25 + \frac{3^2 e^{-3}}{2!} \cdot 0.75}.
+\end{align*}$$`
+
+---
+class: inverse, center, middle
+
+# Then let's turn to continious r.v.'s.
+
+---
+
+## Continuous Random Variables
+
+- For continuous random variables, the possible values are numbers taken continuously on an interval. For instance, `\((0, 1)\)`, `\([0, +\infty)\)`, and `\((-\infty, +\infty)\)`.
+
+--
+
+### How to specify a continuous random variable?
+
+--
+
+We can use
+
+- Cumulative distribution function (CDF):
+$$
+F(x) = P(X \leq x) \text{ for any } x \in \mathbb{R}
+$$
+
+- Probability density function (PDF):
+  - `\(f(x) &gt; 0 \text{ for all } x \in \chi\)`, and `\(f(x) = 0 \text{ for all } x \notin \chi\)`
+  - `\(\int_{-\infty}^{\infty} f(x) \, dx = 1\)`
+
+---
+
+## PDF and CDF
+
+- Find the probability that `\(X\)` belongs to `\(\mathbf{A}\)` (a subset of `\(\mathbb{R}\)`) using PDF: 
+$$
+P(X \in \mathbf{A}) = \int_{\mathbf{A}} f(x) \, dx
+$$
+
+--
+
+**Remark: In general, if `\(X\)` is a continuous r.v., then `\(P(X=x) = 0\)` for any `\(x\)` ([Lebesgue measure](https://en.wikipedia.org/wiki/Lebesgue_measure)).**
+
+--
+
+- Convert its PDF to CDF:
+$$
+F(a) = P(X \leq a) = \int_{-\infty}^{a} f(x) \, dx,
+$$
+for any real number `\(a\)`.
+
+- Convert its CDF to PDF:
+Given `\(F(x)\)`, we can find `\(f(a)\)` by
+$$
+f(a) = \left. \frac{dF(x)}{dx} \right|_{x = a} .
+$$
+
+---
+
+### Problem 3.1
+
+A random variable `\(X\)` has the probability density function (pdf) given by 
+$$
+f(x) = a \cdot e^{-|x|}, \quad -\infty &lt; x &lt; +\infty.
+$$
+
+i) Determine the constant `\(a\)`.
+
+--
+
+**Solution** To find the constant `\(a\)`, we need to ensure that the total area under the pdf is equal to 1 `\(\int_{-\infty}^{\infty} f(x) \, dx = 1.\)`
+
+Calculating the integral:
+`$$\int_{-\infty}^{\infty} a \cdot e^{-|x|} \, dx = 2a \int_{0}^{\infty} e^{-x} \, dx = 2a \cdot [ -e^{-x} ]_{0}^{\infty} = 2a \cdot (1 - 0) = 2a$$`
+
+Setting this equal to 1:
+`$$2a = 1 \implies a = \frac{1}{2}$$`
+
+---
+
+### Problem 3.1
+
+ii) Find the population variance of `\(X\)`.
+
+--
+
+**Solution** The variance is given by `\(E[X^2] - (E[X])^2\)`.
+
+First, we find `\(E[X]\)`:
+$$
+E[X] = \int_{-\infty}^{\infty} x f(x) \, dx = 0 \text{ (due to symmetry)}
+$$
+
+Next, we find `\(E[X^2]\)`:
+`$$\begin{align*}
+E[X^2] = &amp; \int_{-\infty}^{\infty} x^2 f(x) \, dx = 2 \int_{0}^{\infty} x^2 \cdot \frac{1}{2} e^{-x} \, dx = \int_{0}^{\infty} x^2 e^{-x} \, dx \\
+= &amp; -\int_{0}^{\infty} x^2 \, d e^{-x} = -x^2 e^{-x} \Big|_{0}^{\infty} + 2 \int_{0}^{\infty} x e^{-x} \, dx \\
+= &amp; 0 - 2 \int_{0}^{\infty} x \, d e^{-x} = -2 x e^{-x} \Big|_{0}^{\infty} + 2 \int_{0}^{\infty} e^{-x} \, dx \\
+= &amp; 0 - 2 e^{-x} \Big|_{0}^{\infty} = 2.
+\end{align*}$$`
+
+&lt;!-- Now, substituting back into the variance formula: --&gt;
+&lt;!-- $$ --&gt;
+&lt;!-- Var(X) = E[X^2] - (E[X])^2 = 2 - 0 = 2 --&gt;
+&lt;!-- $$ --&gt;
+
+---
+
+### Problem 3.1
+
+iii) Find the cumulative distribution function (cdf) of `\(X\)`.
+
+--
+
+**Solution** The cumulative distribution function `\(F(x)\)` is given by:
+`$$F(x) = \int_{-\infty}^{x} f(t) \, dt$$`
+
+When `\(x &lt; 0\)`:
+`$$F(x) = \int_{-\infty}^{x} \frac{1}{2} e^{-|t|} \, dt = \int_{-\infty}^{x} \frac{1}{2} e^{t} \, dt = \frac{1}{2} \left[ e^{t} \right]_{-\infty}^{x} = \frac{1}{2} \left( e^{x} - 0 \right) = \frac{1}{2} e^{x}$$`
+
+When `\(x \geq 0\)`:
+`$$F(x) = \int_{-\infty}^{0} \frac{1}{2} e^{t} \, dt + \int_{0}^{x} \frac{1}{2} e^{-t} \, dt = \frac{1}{2} + \frac{1}{2} \left[ -e^{-t} \right]_{0}^{x} = \frac{1}{2} + \frac{1}{2} (1 - e^{-x}) = 1 - \frac{1}{2} e^{-x}$$`
+
+&lt;!-- Combining results, the cdf `\(F(x)\)` is: --&gt;
+&lt;!-- $$F(x) =  --&gt;
+&lt;!-- \begin{cases}  --&gt;
+&lt;!-- \frac{1}{2} e^{x} &amp; \text{if } x &lt; 0 \\ --&gt;
+&lt;!-- 1 - \frac{1}{2} e^{-x} &amp; \text{if } x \geq 0  --&gt;
+&lt;!-- \end{cases}$$ --&gt;
+
+---
+
+### Problem 3.1
+
+iv) Evaluate the probability `\(P(-1 \leq X &lt; 1)\)` by using the cdf.
+
+--
+
+**Solution** Using the cdf:
+`$$\begin{align*}
+P(-1 \leq X &lt; 1) = &amp; F(1) - F(-1) \\
+= &amp; \left( 1 - \frac{1}{2} e^{-1} \right) - \left( \frac{1}{2} e^{-1} \right) \\
+= &amp; 1 - e^{-1}
+\end{align*}$$`
+
+---
+
+### Problem 3.2
+
+A student is taking a one-hour-time-limit mathematics competition. Suppose the probability that the student will finish the competition in less than `\(x\)` hours is `\(\frac{x}{2}\)` for all `\(0 &lt; x &lt; 1\)`. Given that the student is still working after 45 minutes, what is the conditional probability that the full hour is used (i.e., the student needs one hour or longer to finish)?
+
+---
+
+### Problem 3.3
+
+A fire station is to be located along a straight street of length `\(b\)`, where `\(0 &lt; b &lt; \infty\)`. Suppose fires could occur at points uniformly distributed on `\([0, b]\)`. Where should the fire station be located so as to minimize the expected distance from the fire? Also find this minimal expected distance.
+
+--
+
+**Solution** Let `\(a\)` be the location of the fire station and `\(x\)` be the location of the fire. The distance is given by `\(D = |x - a|\)` and the expected distance is:
+`$$\begin{align*}
+E[D] = &amp; E_{x \sim U(0,b)}[|x - a|] \\
+= &amp; \frac{1}{b} \int_0^b |x - a| \, dx \\
+= &amp; \frac{1}{b} \left( \int_0^a (a - x) \, dy + \int_a^b (x - a) \, dx \right) \\
+= &amp; \frac{1}{b} \left( \left. \left( -\frac{1}{2} x^2 + ax \right) \right|_{0}^{a} + \left. \left( \frac{1}{2} x^2 - ax \right) \right|_{a}^{b} \right) \\
+= &amp; \frac{1}{b} \left( \left( -\frac{1}{2} a^2 + a^2 \right) + \left( \frac{1}{2} b^2 - ab - \frac{1}{2} a^2 + a^2 \right) \right) \\
+= &amp; \frac{1}{b} \left( \frac{1}{2} b^2 + a^2 - ab \right) \\
+= &amp; \frac{b}{2} - \frac{a}{b} (b - a)
+\end{align*}$$`
+
+
 
 ---
 class: inverse, center, middle
